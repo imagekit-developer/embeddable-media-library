@@ -1,0 +1,12 @@
+node_modules
+**/node_modules
+**/**/node_modules
+**/**/**/node_modules
+**/**/**/**/node_modules
+
+*.pem
+samples/sample-app/*.pem
+
+dist
+.vscode
+.npmrc
