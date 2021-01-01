@@ -1,7 +1,8 @@
 import styles from './styles.css'
 
 export default function ImageKitEML() {
-  const IK_HOST = 'https://stage-eml.imagekit.io';
+  // const IK_HOST = 'https://stage-eml.imagekit.io';
+  const IK_HOST = 'https://dev4.imagekit.io';
   const IK_SRC = `${IK_HOST}/dashboard#inline-media-library`;
 
   // Define constructor 
@@ -97,9 +98,8 @@ export default function ImageKitEML() {
       // create modal
       modal = document.createElement("div");
       modalContent = document.createElement("div");
-      modal.classList.add("modal");
       modal.classList.add("ik-eml-modal");
-      modalContent.classList.add("modal-content");
+      modalContent.classList.add("ik-eml-modal-content");
       modalContent.appendChild(this.ikFrame);
       modal.appendChild(modalContent);
 

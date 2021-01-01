@@ -30,10 +30,11 @@
     "sinon": "^8.1.1"
   },
   "scripts": {
+    "clean": "rm -rf node_modules;npm i",
     "dev": "rollup -c -w",
     "build": "rm -rf dist*;rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:sample": "npm build && cd samples/sample-app/ && npm start"
+    "sample": "npm run build && cd samples/sample-app/ && npm i && npm start"
   },
   "repository": {
     "type": "git",
