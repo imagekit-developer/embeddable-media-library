@@ -8,7 +8,7 @@ module.exports = {
   // https://webpack.js.org/configuration/output/
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'imagekit-ckeditor-eml.js'
   },
 
   module: {

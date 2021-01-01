@@ -1,5 +1,3 @@
 import ImagekitMediaLibrary from './ImagekitMediaLibrary';
 
-export default {
-  ImagekitMediaLibrary
-};
+export default ImagekitMediaLibrary;
