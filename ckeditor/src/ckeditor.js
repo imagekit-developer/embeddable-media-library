@@ -22,7 +22,7 @@ import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
 
 // custom plugin
-import ImagekitMediaLibrary from './../plugin';
+import ImagekitMediaLibrary from './../plugin/ImagekitMediaLibrary.js';
 
 class Editor extends ClassicEditor {}
 
@@ -45,6 +45,7 @@ Editor.builtinPlugins = [
 	Table,
 	TableToolbar,
 	TextTransformation,
+	// include custom plugin in build
 	ImagekitMediaLibrary
 ];
 
