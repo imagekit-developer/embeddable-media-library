@@ -1,19 +1,19 @@
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 // This SVG file import will be handled by webpack's raw-text loader.
-// This means that imageIcon will hold the source SVG.
-import imageIcon from '@ckeditor/ckeditor5-core/theme/icons/image.svg';
+// This means that imagekitLogo will hold the source SVG.
+import imagekitLogo from './imagekit-logo.svg';
 import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
 
-class ImagekitMediaLibrary extends Plugin {
+export default class ImagekitMediaLibrary extends Plugin {
     init() {
-        const editor = this.editor;
+        const editor = this.editor || window.editor;
 
         editor.ui.componentFactory.add('imagekitMediaLibrary', locale => {
             const view = new ButtonView(locale);
 
             view.set({
                 label: 'ImageKit Media Library',
-                icon: imageIcon,
+                icon: imagekitLogo,
                 tooltip: true
             });
 
@@ -27,5 +27,3 @@ class ImagekitMediaLibrary extends Plugin {
         });
     }
 }
-
-export default ImagekitMediaLibrary;

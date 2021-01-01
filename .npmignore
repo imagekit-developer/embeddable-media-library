@@ -1,3 +1,5 @@
+ckeditor
+samples
 dist
 
 node_modules
@@ -7,5 +9,4 @@ node_modules
 .vscode
 .npmrc
 .DS_Store
-
 *.pem

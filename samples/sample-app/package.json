@@ -14,7 +14,6 @@
     "embeddable-media-library": "../../",
     "express": "^4.17.1",
     "imagekit": "^3.1.1",
-    "imagekit-ckeditor": "../../plugins/ckeditor",
     "uuid": "^8.3.2"
   }
 }

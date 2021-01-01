@@ -9,19 +9,17 @@
 
 <body>
   <div class="editor-container">
-    <div id="editor"></div>
+    <div class="editor"></div>
   </div>
 
   <!-- Inset Media Library -->
   <div class="wrapper">
-    asddasdsad
     <div id="container"></div>
   </div>
 </body>
 
-<script src="static/js/imagekit-ckeditor-eml.js"></script>
 <script src="static/js/imagekit-eml.min.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/24.0.0/classic/ckeditor.js"></script>
+<script src="static/ckeditor.js"></script>
 
 <script>
   // initialize plugin
@@ -40,7 +38,7 @@
       width: '100%',
     },
     view: 'modal',  // modal/inline
-    showOpenButton: true // default: true
+    showOpenButton: false // default: true
   };
 
   function callback(payload) {
@@ -59,11 +57,43 @@
 
   // initialize ckeditor
   ClassicEditor
-    .create(document.querySelector('#editor'))
+    .create(document.querySelector('.editor'), {
+      toolbar: {
+        items: [
+          'heading',
+          '|',
+          'bold',
+          'italic',
+          'link',
+          'bulletedList',
+          'numberedList',
+          '|',
+          'imagekitMediaLibrary',
+          'mediaEmbed',
+          'insertTable',
+          '|',
+          'blockQuote',
+          'undo',
+          'redo',
+          'indent',
+          'outdent',
+        ]
+      },
+      language: 'en',
+      table: {
+        contentToolbar: [
+          'tableColumn',
+          'tableRow',
+          'mergeTableCells'
+        ]
+      },
+      licenseKey: '',
+
+    })
     .then(newEditor => {
       editor = newEditor;
-    })
-    .catch(error => {
+      window.editor = newEditor;
+    }).catch(error => {
       console.error(error);
     });
 
