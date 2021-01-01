@@ -2,11 +2,11 @@
   "name": "imagekit-javascript-sample",
   "version": "1.0.0",
   "description": "Sample app for javascript SDK of ImageKit",
-  "main": "index.js",
+  "main": "server.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

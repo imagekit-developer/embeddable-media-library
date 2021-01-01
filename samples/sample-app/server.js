@@ -18,6 +18,5 @@ app.use('/static', express.static(path.join(__dirname, 'public')))
 
 // Include EML and CKEditor plugins in assets
 app.use('/static/js', express.static(path.join(__dirname + '/node_modules/embeddable-media-library/dist/')));
-app.use('/static/js', express.static(path.join(__dirname + '/node_modules/imagekit-ckeditor/dist')));
 
 app.listen(SERVER_PORT);
