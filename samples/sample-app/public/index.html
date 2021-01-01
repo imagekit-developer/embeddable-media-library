@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Embedded Media Library</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <div class="editor-container">
+    <div id="editor"></div>
+  </div>
+
+  <!-- Inset Media Library -->
+  <div class="wrapper">
+    asddasdsad
+    <div id="container"></div>
+  </div>
+</body>
+
+<!-- <script src="static/js/bundle.js"></script> -->
+<script src="static/js/imagekit-eml.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/24.0.0/classic/ckeditor.js"></script>
+
+<script>
+  // initialize plugin
+  this.ImageKitEML();
+
+  // ckeditor
+  let editor;
+
+  // eml plugin
+  const config = {
+    name: 'Embedded Media Library',
+    container: '#container',
+    className: 'embedded-media-library',
+    dimensions: {
+      height: '100%',
+      width: '100%',
+    },
+    view: 'modal',  // modal/inline
+    showOpenButton: true // default: true
+  };
+
+  function callback(payload) {
+    // this is the callback handler
+    // … consume json payload …
+    let htmlImages = '';
+    payload.data.map(({ name, url }) => {
+      htmlImages += `<img src="${url}" alt="${name}" />\n`;
+    });
+
+    let editorData = editor.getData();
+    editor.setData(`${editorData}\n${htmlImages}`);
+  }
+
+  const myFrame = new IKFrame(config, callback);
+
+  // initialize ckeditor
+  ClassicEditor
+    .create(document.querySelector('#editor'))
+    .then(newEditor => {
+      editor = newEditor;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
+</script>
+
+</html>
