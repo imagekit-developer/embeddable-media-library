@@ -1,8 +1,7 @@
 import styles from './styles.css'
 
 export default function ImageKitEML() {
-  // const IK_HOST = 'https://stage-eml.imagekit.io';
-  const IK_HOST = 'https://dev4.imagekit.io';
+  const IK_HOST = 'https://stage-eml.imagekit.io';
   const IK_SRC = `${IK_HOST}/dashboard#inline-media-library`;
 
   // Define constructor 
