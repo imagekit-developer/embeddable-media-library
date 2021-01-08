@@ -1,11 +1,11 @@
 {
-  "name": "embeddable-media-library",
+  "name": "imagekit-media-library-widget",
   "version": "0.1.0",
-  "description": "Javascript plugin for using Imagekit Embeddable Media Library",
-  "main": "dist/imagekit-eml.cjs.js",
-  "module": "dist/imagekit-eml.esm.js",
-  "browser": "dist/imagekit-eml.min.js",
-  "unpkg": "dist/imagekit-eml.min.js",
+  "description": "Javascript plugin for using Imagekit Media Library Widget",
+  "main": "dist/imagekit-media-library-widget.cjs.js",
+  "module": "dist/imagekit-media-library-widget.esm.js",
+  "browser": "dist/imagekit-media-library-widget.min.js",
+  "unpkg": "dist/imagekit-media-library-widget.min.js",
   "files": [
     "dist",
     "src"

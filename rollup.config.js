@@ -10,7 +10,7 @@ export default [
 		input: 'src/index.js',
 		external: ['src/styles.css'],
 		output: {
-			name: 'ImageKitEML',
+			name: 'ImagekitMediaLibraryWidget',
 			file: pkg.browser,
 			format: 'umd'
 		},

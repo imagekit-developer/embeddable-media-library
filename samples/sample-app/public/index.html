@@ -2,13 +2,13 @@
 <html>
 
 <head>
-  <title>ImageKit Embeddable Media Library</title>
+  <title>ImageKit Media Library Widget</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-  <h1 class="text-center">ImageKit Embeddable Media Library</h1>
+  <h1 class="text-center">ImageKit Media Library Widget</h1>
 
   <p class="text-center">Open your ImageKit Media Library by clicking on the ImageKit icon in the middle toolbar and log in.</p>
   <p class="text-center">Select one or more images from the media library and click the "Insert" button on the panel.</p>
@@ -23,21 +23,21 @@
   </div>
 </body>
 
-<script src="static/js/imagekit-eml.min.js"></script>
+<script src="static/js/imagekit-media-library-widget.min.js"></script>
 <script src="static/ckeditor.js"></script>
 
 <script>
   // initialize plugin
-  this.ImageKitEML();
+  this.ImagekitMediaLibraryWidget();
 
   // ckeditor
   let editor;
 
-  // eml plugin
+  // media-library-widget plugin
   const config = {
-    name: 'Embedded Media Library',
+    name: 'Media Library Widget',
     container: '#container',
-    className: 'embedded-media-library',
+    className: 'media-library-widget',
     dimensions: {
       height: '100%',
       width: '100%',
@@ -73,7 +73,7 @@
           'bulletedList',
           'numberedList',
           '|',
-          'imagekitMediaLibrary',
+          'imagekitMediaLibraryWidget',
           'mediaEmbed',
           'insertTable',
           '|',

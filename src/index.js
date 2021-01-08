@@ -1,8 +1,11 @@
 import styles from './styles.css'
 
-export default function ImageKitEML() {
+function ImagekitMediaLibraryWidget() {
   const IK_HOST = 'https://stage-eml.imagekit.io';
-  const IK_SRC = `${IK_HOST}/dashboard#inline-media-library`;
+  // const IK_HOST = 'https://dev4.imagekit.io';
+  const IK_SRC = `${IK_HOST}/media-library-widget`;
+  const WIDGET_HOST = `http://localhost:3000`;
+  const FULL_HOST = `${IK_SRC}?widgetHost=${WIDGET_HOST}`
 
   // Define constructor 
   this.IKFrame = function () {
@@ -71,6 +74,7 @@ export default function ImageKitEML() {
     mainFrame = document.createElement("iframe");
     mainFrame.title = this.options.name;
     mainFrame.src = IK_SRC;
+    // mainFrame.src = FULL_HOST;
     mainFrame.sandbox = 'allow-top-navigation allow-same-origin allow-scripts allow-forms';
     mainFrame.height = this.options.dimensions.height;
     mainFrame.width = this.options.dimensions.width;
@@ -97,8 +101,8 @@ export default function ImageKitEML() {
       // create modal
       modal = document.createElement("div");
       modalContent = document.createElement("div");
-      modal.classList.add("ik-eml-modal");
-      modalContent.classList.add("ik-eml-modal-content");
+      modal.classList.add("ik-media-library-widget-modal");
+      modalContent.classList.add("ik-media-library-widget-modal-content");
       modalContent.appendChild(this.ikFrame);
       modal.appendChild(modalContent);
 
@@ -129,7 +133,7 @@ export default function ImageKitEML() {
       return;
     }
 
-    if (event.data.eventType === 'CLOSE_EML') {
+    if (event.data.eventType === 'CLOSE_MEDIA_LIBRARY_WIDGET') {
       closeModal();
     } else if (event.data.eventType === 'INSERT') {
       this.callback(event.data);
@@ -137,3 +141,5 @@ export default function ImageKitEML() {
     }
   });
 }
+
+export default ImagekitMediaLibraryWidget;

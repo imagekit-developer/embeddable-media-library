@@ -1,5 +1,5 @@
 /* The Modal (background) */
-.ik-eml-modal {
+.ik-media-library-widget-modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -14,7 +14,7 @@
 }
 
 /* Modal Content */
-.ik-eml-modal-content {
+.ik-media-library-widget-modal-content {
   background-color: #fefefe;
   margin: auto;
   /* padding: 5px; */

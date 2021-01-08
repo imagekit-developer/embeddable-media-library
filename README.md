@@ -1,4 +1,4 @@
-# Embeddable Media Library
+# ImageKit Media Library Widget
 
 This plugin provides access to ImageKit Media Library through an embeddable UI from within your own CMS or website.
 
@@ -15,31 +15,31 @@ This plugin provides access to ImageKit Media Library through an embeddable UI f
 Thorugh CDN:
 
 ```html
-<script src="<CDN_LINK>/imagekit-eml.min.js"></script>
+<script src="<CDN_LINK>/imagekit-media-library-widget.min.js"></script>
 ```
 
 Through npm:
 
 ```bash
-npm install --save embeddable-media-library
+npm install --save imagekit-media-library-widget
 ```
 
 Include it:
 
 ```js
-import ImagekitEML from 'embeddable-media-library';
+import ImagekitMediaLibraryWidget from 'imagekit-media-library-widget';
 ```
 
 ## Usage
 
-Check out our detailed guide on ImageKit Docs: [Embeddable Media Library](https://docs.imagekit.io/sample-projects/embeddable-media-library)
+Check out our detailed guide on ImageKit Docs: [Media Library Widget](https://docs.imagekit.io/sample-projects/imagekit-media-library-widget)
 
 ### Quick start (HTML and JS)
 
 Include the script in your HTML:
 
 ```html
-<script src="<CDN_LINK>/imagekit-eml.min.js"></script>
+<script src="<CDN_LINK>/imagekit-media-library-widget.min.js"></script>
 ```
 
 Define a DOM container for the plugin. This accepts any CSS selector:
@@ -55,14 +55,14 @@ or
 Write a script to configure, initialize and instantiate the plugin:
 
 ```js
-// initialize the EML plugin
-this.ImageKitEML();
+// initialize the Media Library Widget plugin
+this.ImagekitMediaLibraryWidget();
 
 // configuration options
 const config = {
-  name: 'Embedded Media Library',
-  container: '#container',   // the element in which the EML will be rendered
-  className: 'embedded-media-library',
+  name: 'Media Library Widget',
+  container: '#container',   // the element in which the Media Library Widget will be rendered
+  className: 'media-library-widget',
   dimensions: {
     height: '100%',
     width: '100%',
@@ -77,7 +77,7 @@ function callback(payload) {
   // … consume json payload …
 }
 
-// instantiate the EML plugin
+// instantiate the Media Library Widget plugin
 const myFrame = new IKFrame(config, callback);
 ```
 
@@ -128,7 +128,7 @@ embeddable-media-library/
 |- ckeditor/
   |- plugin/
     |- imagekit-logo.svg
-    |- ImagekitMediaLibrary.js
+    |- ImagekitMediaLibraryWidget.js
 ```
 
 You can copy the files into your own ckeditor build:
@@ -144,14 +144,14 @@ Import and include it in your ckeditor config as show in in `ckeditor/src/ckedit
 
 ```js
 // custom plugin
-import ImagekitMediaLibrary from './../plugin/ImagekitMediaLibrary.js';
+import ImagekitMediaLibraryWidget from './../plugin/ImagekitMediaLibraryWidget.js';
 
 class Editor extends ClassicEditor {}
 
 // Plugins to include in the build.
 Editor.builtinPlugins = [
 	// include custom plugin in build
-  ImagekitMediaLibrary,
+  ImagekitMediaLibraryWidget,
   // ...other components
 ];
 
