@@ -7,8 +7,10 @@ This plugin provides access to ImageKit Media Library through an embeddable UI f
 1. [Installation](#installation)
 1. [Usage](#usage)
 1. [Development](#development)
-1. [CKEditor Integration](#ckeditor-integration)
 1. [Demo](#demo)
+1. [CKEditor Integration](#ckeditor-integration)
+
+---
 
 ## Installation
 
@@ -29,6 +31,8 @@ Include it:
 ```js
 import ImagekitMediaLibraryWidget from 'imagekit-media-library-widget';
 ```
+
+---
 
 ## Usage
 
@@ -82,6 +86,8 @@ function callback(payload) {
 const myFrame = new IKFrame(config, callback);
 ```
 
+---
+
 ## Development
 
 ### Clone the repository
@@ -106,6 +112,28 @@ npm run build
 ```
 
 The generated files are available under `dist/` folder.
+
+---
+
+## Demo
+
+Build the plugin:
+
+```bash
+npm install
+npm run build
+```
+
+Then, serve the included demo `sample-app` as follows:
+
+```bash
+cd samples/sample-app
+npm install
+npm start
+```
+The sample app should be available on `http://localhost:3000`.
+
+---
 
 ## CKEditor Integration
 
@@ -151,7 +179,7 @@ class Editor extends ClassicEditor {}
 
 // Plugins to include in the build.
 Editor.builtinPlugins = [
-	// include custom plugin in build
+  // include custom plugin in build
   ImagekitMediaLibraryWidget,
   // ...other components
 ];
@@ -165,22 +193,43 @@ Build your editor:
 npm run build
 ```
 
-Include the generated build files in your application and use them.
+Include the generated build files in your application and use them:
 
-## Demo
-
-Build the plugin:
-
-```bash
-npm install
-npm run build
+```html
+<div class="editor"></div>
 ```
 
-Then, serve the included demo `sample-app` as follows:
+```js
+// ckeditor
+let editor;
 
-```bash
-cd samples/sample-app
-npm install
-npm start
+// initialize ckeditor
+ClassicEditor
+  .create(document.querySelector('.editor'), {
+    toolbar: {
+      items: [
+        // include custom IK ckeditor plugin
+        'imagekitMediaLibraryWidget',
+        // other ckeditor plugins
+        'bold',
+        'italic',
+        // ...
+      ]
+    },
+    language: 'en',
+    table: {
+      contentToolbar: [
+        'tableColumn',
+        'tableRow',
+        'mergeTableCells'
+      ]
+    },
+    licenseKey: '',
+  })
+  .then(newEditor => {
+    editor = newEditor;
+    window.editor = newEditor;
+  }).catch(error => {
+    console.error(error);
+  });
 ```
-The sample app should be available on `http://localhost:3000`.
