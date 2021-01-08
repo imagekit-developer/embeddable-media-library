@@ -3,9 +3,7 @@ import styles from './styles.css'
 function ImagekitMediaLibraryWidget() {
   const IK_HOST = 'https://stage-eml.imagekit.io';
   // const IK_HOST = 'https://dev4.imagekit.io';
-  const IK_SRC = `${IK_HOST}/media-library-widget`;
-  const WIDGET_HOST = `http://localhost:3000`;
-  const FULL_HOST = `${IK_SRC}?widgetHost=${WIDGET_HOST}`
+  const IK_SRC = `${IK_HOST}/media-library-widget?redirectTo=media-library-widget&isMediaLibraryWidget=true`;
 
   // Define constructor 
   this.IKFrame = function () {
@@ -30,6 +28,7 @@ function ImagekitMediaLibraryWidget() {
       },
       view: 'modal',
       showOpenButton: true,
+      widgetHost: '',
     };
 
     // Create options by extending defaults with the passed in arugments
@@ -73,8 +72,7 @@ function ImagekitMediaLibraryWidget() {
 
     mainFrame = document.createElement("iframe");
     mainFrame.title = this.options.name;
-    mainFrame.src = IK_SRC;
-    // mainFrame.src = FULL_HOST;
+    mainFrame.src = `${IK_SRC}&widgetHost=${this.options.widgetHost}`;
     mainFrame.sandbox = 'allow-top-navigation allow-same-origin allow-scripts allow-forms';
     mainFrame.height = this.options.dimensions.height;
     mainFrame.width = this.options.dimensions.width;

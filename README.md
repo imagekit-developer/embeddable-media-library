@@ -68,7 +68,8 @@ const config = {
     width: '100%',
   },
   view: 'modal',  // modal/inline
-  showOpenButton: true  // default
+  showOpenButton: true,  // default
+  widgetHost: 'http://localhost:3000'
 };
 
 // define callback handler
