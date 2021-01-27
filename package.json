@@ -1,6 +1,6 @@
 {
   "name": "imagekit-media-library-widget",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha.0",
   "description": "Javascript plugin for using Imagekit Media Library Widget",
   "main": "dist/imagekit-media-library-widget.cjs.js",
   "module": "dist/imagekit-media-library-widget.esm.js",
