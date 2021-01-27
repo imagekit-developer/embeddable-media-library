@@ -1,4 +1,4 @@
-# ImageKit Media Library Widget
+# [WIP] ImageKit Media Library Widget
 
 This plugin provides access to ImageKit Media Library through an embeddable UI from within your own CMS or website.
 
