@@ -1,4 +1,8 @@
+[<img width="250" alt="ImageKit.io" src="https://raw.githubusercontent.com/imagekit-developer/imagekit-javascript/master/assets/imagekit-light-logo.svg"/>](https://imagekit.io)
+
 # [WIP] ImageKit Media Library Widget
+
+[![npm version](https://img.shields.io/npm/v/imagekit-media-library-widget)](https://www.npmjs.com/package/imagekit-media-library-widget)
 
 This plugin provides access to ImageKit Media Library through an embeddable UI from within your own CMS or website.
 
