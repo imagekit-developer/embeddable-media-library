@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ImageKit Media Library Widget</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <h1 class="text-center">ImageKit Media Library Widget</h1>
+
+  <p class="text-center">Open your ImageKit Media Library by clicking on the ImageKit icon in the middle toolbar and log in.</p>
+  <p class="text-center">Select one or more images from the media library and click the "Insert" button on the panel.</p>
+
+  <div class="editor-container">
+    <div class="editor"></div>
+  </div>
+
+  <!-- Inset Media Library -->
+  <div class="wrapper">
+    <div id="container"></div>
+  </div>
+</body>
+
+<script src="static/js/imagekit-media-library-widget.min.js"></script>
+<script src="static/ckeditor.js"></script>
+
+<script>
+  // initialize plugin
+  this.ImagekitMediaLibraryWidget();
+
+  // ckeditor
+  let editor;
+
+  // media-library-widget plugin
+  const config = {
+    name: 'Media Library Widget',
+    container: '#container',
+    className: 'media-library-widget',
+    dimensions: {
+      height: '100%',
+      width: '100%',
+    },
+    view: 'modal',  // modal/inline
+    showOpenButton: false, // default: true
+    widgetHost: 'http://localhost:3000'
+  };
+
+  function callback(payload) {
+    // this is the callback handler
+    // … consume json payload …
+    let htmlImages = '';
+    payload.data.map(({ name, url }) => {
+      htmlImages += `<img src="${url}" alt="${name}" />\n`;
+    });
+
+    let editorData = editor.getData();
+    editor.setData(`${editorData}\n${htmlImages}`);
+  }
+
+  const myFrame = new IKFrame(config, callback);
+
+  // initialize ckeditor
+  ClassicEditor
+    .create(document.querySelector('.editor'), {
+      toolbar: {
+        items: [
+          'heading',
+          '|',
+          'bold',
+          'italic',
+          'link',
+          'bulletedList',
+          'numberedList',
+          '|',
+          'imagekitMediaLibraryWidget',
+          'mediaEmbed',
+          'insertTable',
+          '|',
+          'blockQuote',
+          'undo',
+          'redo',
+          'indent',
+          'outdent',
+        ]
+      },
+      language: 'en',
+      table: {
+        contentToolbar: [
+          'tableColumn',
+          'tableRow',
+          'mergeTableCells'
+        ]
+      },
+      licenseKey: '',
+
+    })
+    .then(newEditor => {
+      editor = newEditor;
+      window.editor = newEditor;
+    }).catch(error => {
+      console.error(error);
+    });
+
+</script>
+
+</html>
