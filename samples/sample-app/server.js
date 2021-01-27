@@ -16,7 +16,4 @@ app.use(cors());
 app.use(express.static('public'))
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
-// Include Media Library Widget and CKEditor plugins in assets
-app.use('/static/js', express.static(path.join(__dirname + '/node_modules/imagekit-media-library-widget/dist/')));
-
 app.listen(SERVER_PORT);

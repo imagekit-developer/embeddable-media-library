@@ -18,24 +18,29 @@ This plugin provides access to ImageKit Media Library through an embeddable UI f
 
 ## Installation
 
-Thorugh CDN:
+### Using CDN
 
 ```html
-<script src="<CDN_LINK>/imagekit-media-library-widget.min.js"></script>
+<script src="https://unpkg.com/imagekit-media-library-widget/dist/imagekit-media-library-widget.min.js"></script>
 ```
 
-Through npm:
+### Using NPM
+
+Install `imagekit-media-library-widget`
 
 ```bash
 npm install --save imagekit-media-library-widget
 ```
 
-Include it:
+Now include it in your JS code
 
 ```js
+// ES6 module
 import ImagekitMediaLibraryWidget from 'imagekit-media-library-widget';
-```
 
+// Common JS syntax
+const ImageKit = require("imagekit-media-library-widget")
+```
 ---
 
 ## Usage
@@ -47,7 +52,7 @@ Check out our detailed guide on ImageKit Docs: [Media Library Widget](https://do
 Include the script in your HTML:
 
 ```html
-<script src="<CDN_LINK>/imagekit-media-library-widget.min.js"></script>
+<script src="https://unpkg.com/imagekit-media-library-widget/dist/imagekit-media-library-widget.min.js"></script>
 ```
 
 Define a DOM container for the plugin. This accepts any CSS selector:
