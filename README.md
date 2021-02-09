@@ -72,7 +72,7 @@ Write a script to configure, initialize and instantiate the plugin:
 this.ImagekitMediaLibraryWidget();
 
 // configuration options
-const config = {
+var config = {
   name: 'Media Library Widget',
   container: '#container',   // the element in which the Media Library Widget will be rendered
   className: 'media-library-widget',
@@ -82,7 +82,6 @@ const config = {
   },
   view: 'modal',  // modal/inline
   showOpenButton: true,  // default
-  widgetHost: 'http://localhost:3000'
 };
 
 // define callback handler
@@ -92,7 +91,7 @@ function callback(payload) {
 }
 
 // instantiate the Media Library Widget plugin
-const myFrame = new IKFrame(config, callback);
+var mediaLibraryWidget = new IKMediaLibraryWidget(config, callback);
 ```
 
 ---
@@ -210,7 +209,7 @@ Include the generated build files in your application and use them:
 
 ```js
 // ckeditor
-let editor;
+var editor;
 
 // initialize ckeditor
 ClassicEditor

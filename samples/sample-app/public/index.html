@@ -27,14 +27,11 @@
 <script src="static/ckeditor.js"></script>
 
 <script>
-  // initialize plugin
-  this.ImagekitMediaLibraryWidget();
-
   // ckeditor
-  let editor;
+  var editor;
 
   // media-library-widget plugin
-  const config = {
+  var config = {
     name: 'Media Library Widget',
     container: '#container',
     className: 'media-library-widget',
@@ -44,22 +41,21 @@
     },
     view: 'modal',  // modal/inline
     showOpenButton: false, // default: true
-    widgetHost: 'http://localhost:3000'
   };
 
   function callback(payload) {
     // this is the callback handler
     // … consume json payload …
-    let htmlImages = '';
+    var htmlImages = '';
     payload.data.map(({ name, url }) => {
       htmlImages += `<img src="${url}" alt="${name}" />\n`;
     });
 
-    let editorData = editor.getData();
+    var editorData = editor.getData();
     editor.setData(`${editorData}\n${htmlImages}`);
   }
 
-  const myFrame = new IKFrame(config, callback);
+  var mediaLibraryWidget = new IKMediaLibraryWidget(config, callback);
 
   // initialize ckeditor
   ClassicEditor

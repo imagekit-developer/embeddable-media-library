@@ -22,7 +22,7 @@ import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
 
 // custom plugin
-import ImagekitMediaLibraryWidget from './../plugin/ImagekitMediaLibraryWidget.js';
+import ImagekitMediaLibraryWidget from 'imagekit-media-library-widget-ckeditor5';
 
 class Editor extends ClassicEditor {}
 

@@ -1,14 +1,15 @@
+'use strict';
 import styles from './styles.css'
 
 function ImagekitMediaLibraryWidget() {
-  const IK_HOST = 'https://stage-eml.imagekit.io';
-  // const IK_HOST = 'https://dev4.imagekit.io';
-  const IK_SRC = `${IK_HOST}/media-library-widget?redirectTo=media-library-widget&isMediaLibraryWidget=true`;
+  var IK_HOST = 'https://eml.imagekit.io';
+  var IK_SRC = `${IK_HOST}/media-library-widget?redirectTo=media-library-widget&isMediaLibraryWidget=true`;
 
   // Define constructor 
-  this.IKFrame = function () {
+  var IKMediaLibraryWidget = function () {
     // Create global element references
     this.security = null;
+    this.widgetHost = window.location.href;
 
     // Define option defaults 
     var defaults = {
@@ -28,7 +29,6 @@ function ImagekitMediaLibraryWidget() {
       },
       view: 'modal',
       showOpenButton: true,
-      widgetHost: '',
     };
 
     // Create options by extending defaults with the passed in arugments
@@ -44,7 +44,7 @@ function ImagekitMediaLibraryWidget() {
     this.init();
   }
 
-  IKFrame.prototype.init = function () {
+  IKMediaLibraryWidget.prototype.init = function () {
     buildOut.call(this);
   }
 
@@ -72,7 +72,7 @@ function ImagekitMediaLibraryWidget() {
 
     mainFrame = document.createElement("iframe");
     mainFrame.title = this.options.name;
-    mainFrame.src = `${IK_SRC}&widgetHost=${this.options.widgetHost}`;
+    mainFrame.src = `${IK_SRC}&widgetHost=${this.widgetHost}`;
     mainFrame.sandbox = 'allow-top-navigation allow-same-origin allow-scripts allow-forms';
     mainFrame.height = this.options.dimensions.height;
     mainFrame.width = this.options.dimensions.width;
@@ -115,7 +115,7 @@ function ImagekitMediaLibraryWidget() {
     }
   }
 
-  const closeModal = () => {
+  function closeModal() {
     modal.style.display = "none";
   }
 
@@ -126,7 +126,7 @@ function ImagekitMediaLibraryWidget() {
   }
 
   // Called sometime after postMessage is called
-  window.addEventListener("message", (event) => {
+  window.addEventListener("message", function (event) {
     if (event.origin !== IK_HOST) {
       return;
     }
@@ -138,6 +138,8 @@ function ImagekitMediaLibraryWidget() {
       closeModal();
     }
   });
+
+  return window.IKMediaLibraryWidget = IKMediaLibraryWidget;
 }
 
-export default ImagekitMediaLibraryWidget;
+export default ImagekitMediaLibraryWidget();

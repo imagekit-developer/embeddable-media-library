@@ -1,8 +1,8 @@
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
+import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
 // This SVG file import will be handled by webpack's raw-text loader.
 // This means that imagekitLogo will hold the source SVG.
-import imagekitLogo from './imagekit-logo.svg';
-import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
+import imagekitLogo from './../assets/imagekit-logo.svg';
 
 export default class ImagekitMediaLibraryWidget extends Plugin {
     init() {

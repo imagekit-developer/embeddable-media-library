@@ -1,25 +1,30 @@
 import babel from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
 import pkg from './package.json';
-import styles from "rollup-plugin-styles";
-import { terser } from "rollup-plugin-terser";
+import styles from 'rollup-plugin-styles';
+import { terser } from 'rollup-plugin-terser';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 export default [
 	// browser-friendly UMD build
 	{
 		input: 'src/index.js',
 		external: ['src/styles.css'],
-		output: {
-			name: 'ImagekitMediaLibraryWidget',
-			file: pkg.browser,
-			format: 'umd'
-		},
 		plugins: [
-			babel(),
-			json(),
+			nodeResolve(),
+			babel({ babelHelpers: 'bundled' }),
 			terser(),
+			json(),
 			styles(),
 		],
+		context: 'this',
+		output: {
+			file: pkg.browser,
+			format: 'umd',
+			name: 'ImagekitMediaLibraryWidget',
+			esModule: false,
+			sourcemap: true,
+		},
 	},
 	// CommonJS (for Node) and ES module (for bundlers) build.
 	// (We could have three entries in the configuration array
@@ -30,13 +35,22 @@ export default [
 	{
 		input: 'src/index.js',
 		external: ['src/styles.css'],
-		output: [
-			{ file: pkg.main, format: 'cjs' },
-			{ file: pkg.module, format: 'es' },
-		],
 		plugins: [
+			nodeResolve(),
+			babel({ babelHelpers: 'bundled' }),
+			terser(),
 			json(),
-			styles(),
-		]
-	}
+			styles()
+		],
+		output: [{
+			file: pkg.module,
+			format: 'esm',
+			sourcemap: true,
+		},
+		{
+			file: pkg.main,
+			format: 'cjs',
+			sourcemap: true,
+		}],
+	},
 ];

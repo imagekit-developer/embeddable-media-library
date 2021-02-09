@@ -1,0 +1,43 @@
+{
+  "name": "imagekit-media-library-widget-ckeditor5",
+  "version": "0.1.0",
+  "description": "CKEditor 5 integration for ImageKit Media Library Widget",
+  "keywords": [
+    "ckeditor",
+    "ckeditor5",
+    "ckeditor 5",
+    "ckeditor5-feature",
+    "ckeditor5-plugin",
+    "imagekit",
+    "imagekit-media-library-widget"
+  ],
+  "dependencies": {
+    "@ckeditor/ckeditor5-core": "^24.0.0",
+    "@ckeditor/ckeditor5-engine": "^24.0.0",
+    "@ckeditor/ckeditor5-ui": "^24.0.0",
+    "@ckeditor/ckeditor5-utils": "^24.0.0"
+  },
+  "devDependencies": {
+    "@ckeditor/ckeditor5-essentials": "^24.0.0"
+  },
+  "engines": {
+    "node": ">=12.0.0",
+    "npm": ">=5.7.1"
+  },
+  "author": "ImageKit",
+  "license": "MIT",
+  "bugs": "https://github.com/imagekit-developer/embeddable-media-library/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imagekit-developer/embeddable-media-library.git"
+  },
+  "files": [
+    "lang",
+    "src",
+    "theme",
+    "assets"
+  ],
+  "scripts": {
+    "clean": "rm -rf node_modules package-lock.json;npm i;"
+  }
+}
