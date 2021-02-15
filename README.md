@@ -1,10 +1,12 @@
 [<img width="250" alt="ImageKit.io" src="https://raw.githubusercontent.com/imagekit-developer/imagekit-javascript/master/assets/imagekit-light-logo.svg"/>](https://imagekit.io)
 
-# [WIP] ImageKit Media Library Widget
+# ImageKit Media Library Widget
 
 [![npm version](https://img.shields.io/npm/v/imagekit-media-library-widget)](https://www.npmjs.com/package/imagekit-media-library-widget)
 
 This plugin provides access to ImageKit Media Library through an embeddable UI from within your own CMS or website.
+
+![01-mlw-intro.png](assets/screenshots/01-mlw-intro.png)
 
 ## Table of Contents
 
@@ -12,7 +14,7 @@ This plugin provides access to ImageKit Media Library through an embeddable UI f
 1. [Usage](#usage)
 1. [Development](#development)
 1. [Demo](#demo)
-1. [CKEditor Integration](#ckeditor-integration)
+1. [CKEditor Custom Build](#ckeditor-custom-build)
 
 ---
 
@@ -26,13 +28,13 @@ This plugin provides access to ImageKit Media Library through an embeddable UI f
 
 ### Using NPM
 
-Install `imagekit-media-library-widget`
+Install `imagekit-media-library-widget`:
 
 ```bash
 npm install --save imagekit-media-library-widget
 ```
 
-Now include it in your JS code
+Now include it in your JS code:
 
 ```js
 // ES6 module
@@ -68,9 +70,6 @@ or
 Write a script to configure, initialize and instantiate the plugin:
 
 ```js
-// initialize the Media Library Widget plugin
-this.ImagekitMediaLibraryWidget();
-
 // configuration options
 var config = {
   name: 'Media Library Widget',
@@ -93,6 +92,8 @@ function callback(payload) {
 // instantiate the Media Library Widget plugin
 var mediaLibraryWidget = new IKMediaLibraryWidget(config, callback);
 ```
+
+![01-mlw.gif](assets/gifs/01-mlw.gif)
 
 ---
 
@@ -125,14 +126,7 @@ The generated files are available under `dist/` folder.
 
 ## Demo
 
-Build the plugin:
-
-```bash
-npm install
-npm run build
-```
-
-Then, serve the included demo `sample-app` as follows:
+Install dependencies and serve the included demo `sample-app`:
 
 ```bash
 cd samples/sample-app
@@ -143,101 +137,62 @@ The sample app should be available on `http://localhost:3000`.
 
 ---
 
-## CKEditor Integration
+## CKEditor Custom Build
 
-This repository also includes an integration plugin for CKEditor 5. 
+This repository includes a custom build for CKEditor 5 that integrates the widget. 
 
-### Using the included CKEditor custom build
+![01-mlw-ck.gif](assets/gifs/01-mlw-ck.gif)
+
+### Installing the included CKEditor custom build
+
+Build the custom CKEditor:
 
 ```bash
-cd embeddable-media-library/ckeditor/
+cd embeddable-media-library/samples/sample-ckeditor/
 npm install
 npm run build
-cp -r build/ <path_to_your_app_directory>/ckeditor
 ```
 
-### Using the integration plugin in your own CKEditor custom build
-
-The integration plugin files are located at `ckeditor/plugin/`.
-
-```
-embeddable-media-library/
-|- ckeditor/
-  |- plugin/
-    |- imagekit-logo.svg
-    |- ImagekitMediaLibraryWidget.js
-```
-
-You can copy the files into your own ckeditor build:
+Copy it to your web project directory:
 
 ```bash
-cd embeddable-media-library/
-cp -r ckeditor/plugin <path_to_your_ckeditor_build_directory◊>
+cp -r build/ <path_to_your_app_directory>/ckeditor/
 ```
 
-Import and include it in your ckeditor config as show in in `ckeditor/src/ckeditor.js`.
-
-**Example:**
-
-```js
-// custom plugin
-import ImagekitMediaLibraryWidget from './../plugin/ImagekitMediaLibraryWidget.js';
-
-class Editor extends ClassicEditor {}
-
-// Plugins to include in the build.
-Editor.builtinPlugins = [
-  // include custom plugin in build
-  ImagekitMediaLibraryWidget,
-  // ...other components
-];
-
-export default Editor;
-```
-
-Build your editor:
-
-```bash
-npm run build
-```
-
-Include the generated build files in your application and use them:
+Configure it within your web app:
 
 ```html
-<div class="editor"></div>
-```
+<html>
+  <body>
+    <!-- This is where the CKEditor will be rendered -->
+    <div class="editor"></div>
+    <!-- This will be used by media library widget -->
+    <div id="container"></div>
+  </body>
 
-```js
-// ckeditor
-var editor;
+  <!-- include media library widget code -->
+  <script src="https://unpkg.com/imagekit-media-library-widget/dist/imagekit-media-library-widget.min.js"></script>
+  <!-- include custom ckeditor -->
+  <script src="<path_to_your_webpage_source>/ckeditor.js"></script>
 
-// initialize ckeditor
-ClassicEditor
-  .create(document.querySelector('.editor'), {
-    toolbar: {
-      items: [
-        // include custom IK ckeditor plugin
-        'imagekitMediaLibraryWidget',
-        // other ckeditor plugins
-        'bold',
-        'italic',
-        // ...
-      ]
-    },
-    language: 'en',
-    table: {
-      contentToolbar: [
-        'tableColumn',
-        'tableRow',
-        'mergeTableCells'
-      ]
-    },
-    licenseKey: '',
-  })
-  .then(newEditor => {
-    editor = newEditor;
-    window.editor = newEditor;
-  }).catch(error => {
-    console.error(error);
-  });
+  <!-- configure the editor and widget -->
+  <script>
+  // ckeditor
+  var editor;
+
+  // ...
+  // ...imagekit media library widget configuration (as shown earlier)
+  // ...
+
+  // initialize ckeditor
+  ClassicEditor
+    .create(document.querySelector('.editor'))
+    .then(newEditor => {
+      editor = newEditor;
+      window.editor = newEditor;
+    }).catch(error => {
+      console.error(error);
+    });
+  </script>
+</html>
 ```

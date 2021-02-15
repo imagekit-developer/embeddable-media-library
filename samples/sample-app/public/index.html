@@ -59,39 +59,7 @@
 
   // initialize ckeditor
   ClassicEditor
-    .create(document.querySelector('.editor'), {
-      toolbar: {
-        items: [
-          'heading',
-          '|',
-          'bold',
-          'italic',
-          'link',
-          'bulletedList',
-          'numberedList',
-          '|',
-          'imagekitMediaLibraryWidget',
-          'mediaEmbed',
-          'insertTable',
-          '|',
-          'blockQuote',
-          'undo',
-          'redo',
-          'indent',
-          'outdent',
-        ]
-      },
-      language: 'en',
-      table: {
-        contentToolbar: [
-          'tableColumn',
-          'tableRow',
-          'mergeTableCells'
-        ]
-      },
-      licenseKey: '',
-
-    })
+    .create(document.querySelector('.editor'))
     .then(newEditor => {
       editor = newEditor;
       window.editor = newEditor;
