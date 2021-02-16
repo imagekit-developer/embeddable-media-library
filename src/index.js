@@ -4,6 +4,7 @@ import styles from './styles.css'
 function ImagekitMediaLibraryWidget() {
   var IK_HOST = 'https://eml.imagekit.io';
   var IK_SRC = `${IK_HOST}/media-library-widget?redirectTo=media-library-widget&isMediaLibraryWidget=true`;
+  var insertCallback;
 
   // Define constructor 
   var IKMediaLibraryWidget = function () {
@@ -39,6 +40,7 @@ function ImagekitMediaLibraryWidget() {
     // Set callback function
     if (arguments[1] && typeof arguments[1] === "function") {
       this.callback = arguments[1];
+      insertCallback = this.callback;
     }
 
     this.init();
@@ -134,7 +136,7 @@ function ImagekitMediaLibraryWidget() {
     if (event.data.eventType === 'CLOSE_MEDIA_LIBRARY_WIDGET') {
       closeModal();
     } else if (event.data.eventType === 'INSERT') {
-      this.callback(event.data);
+      insertCallback(event.data);
       closeModal();
     }
   });

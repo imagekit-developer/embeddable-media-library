@@ -23,15 +23,14 @@
   </div>
 </body>
 
-<script src="https://unpkg.com/imagekit-media-library-widget/dist/imagekit-media-library-widget.min.js"></script>
 <script src="static/ckeditor.js"></script>
 
 <script>
   // ckeditor
   var editor;
 
-  // media-library-widget plugin
-  var config = {
+  // imagekit media library widget configuration
+  var pluginOptions = {
     name: 'Media Library Widget',
     container: '#container',
     className: 'media-library-widget',
@@ -39,27 +38,15 @@
       height: '100%',
       width: '100%',
     },
-    view: 'modal',  // modal/inline
-    showOpenButton: false, // default: true
   };
-
-  function callback(payload) {
-    // this is the callback handler
-    // … consume json payload …
-    var htmlImages = '';
-    payload.data.map(({ name, url }) => {
-      htmlImages += `<img src="${url}" alt="${name}" />\n`;
-    });
-
-    var editorData = editor.getData();
-    editor.setData(`${editorData}\n${htmlImages}`);
-  }
-
-  var mediaLibraryWidget = new IKMediaLibraryWidget(config, callback);
 
   // initialize ckeditor
   ClassicEditor
-    .create(document.querySelector('.editor'))
+    .create(document.querySelector('.editor'), {
+        imagekitMediaLibraryWidget: {
+          config: pluginOptions
+        }
+      })
     .then(newEditor => {
       editor = newEditor;
       window.editor = newEditor;

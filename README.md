@@ -170,8 +170,6 @@ Configure it within your web app:
     <div id="container"></div>
   </body>
 
-  <!-- include media library widget code -->
-  <script src="https://unpkg.com/imagekit-media-library-widget/dist/imagekit-media-library-widget.min.js"></script>
   <!-- include custom ckeditor -->
   <script src="<path_to_your_webpage_source>/ckeditor.js"></script>
 
@@ -180,13 +178,24 @@ Configure it within your web app:
   // ckeditor
   var editor;
 
-  // ...
-  // ...imagekit media library widget configuration (as shown earlier)
-  // ...
+  // imagekit media library widget configuration
+  var pluginOptions = {
+    name: 'Media Library Widget',
+    container: '#container',
+    className: 'media-library-widget',
+    dimensions: {
+      height: '100%',
+      width: '100%',
+    },
+  };
 
   // initialize ckeditor
   ClassicEditor
-    .create(document.querySelector('.editor'))
+    .create(document.querySelector('.editor'), {
+        imagekitMediaLibraryWidget: {
+          config: pluginOptions
+        }
+      })
     .then(newEditor => {
       editor = newEditor;
       window.editor = newEditor;

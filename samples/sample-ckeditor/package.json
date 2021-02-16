@@ -24,7 +24,7 @@
     "@ckeditor/ckeditor5-theme-lark": "^24.0.0",
     "@ckeditor/ckeditor5-typing": "^24.0.0",
     "css-loader": "^5.0.1",
-    "imagekit-ckeditor5-plugin": "0.1.0-alpha",
+    "imagekit-ckeditor5-plugin": "0.1.1-alpha",
     "postcss": "^8.2.1",
     "postcss-loader": "^4.1.0",
     "raw-loader": "^4.0.2",
