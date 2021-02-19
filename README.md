@@ -38,10 +38,10 @@ Now include it in your JS code:
 
 ```js
 // ES6 module
-import ImagekitMediaLibraryWidget from 'imagekit-media-library-widget';
+import IKMediaLibraryWidgetCore from 'imagekit-media-library-widget';
 
 // Common JS syntax
-const ImageKit = require("imagekit-media-library-widget")
+const IKMediaLibraryWidgetCore = require("imagekit-media-library-widget");
 ```
 ---
 
