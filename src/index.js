@@ -4,6 +4,7 @@ import styles from './styles.css'
 function ImagekitMediaLibraryWidget() {
   var IK_HOST = 'https://eml.imagekit.io';
   var IK_SRC = `${IK_HOST}/media-library-widget?redirectTo=media-library-widget&isMediaLibraryWidget=true`;
+  var IK_FRAME_TITLE = 'ImageKit Embedded Media Library';
   var insertCallback;
 
   // Define constructor 
@@ -14,7 +15,7 @@ function ImagekitMediaLibraryWidget() {
 
     // Define option defaults 
     var defaults = {
-      className: "ik-frame",
+      className: "",
       container: "",
       containerDimensions: {
         height: '100%',
@@ -24,12 +25,11 @@ function ImagekitMediaLibraryWidget() {
         height: '100%',
         width: '100%'
       },
-      name: 'ImageKit Media Library',
       style: {
         border: 'none'
       },
       view: 'modal',
-      showOpenButton: true,
+      renderOpenButton: true,
     };
 
     // Create options by extending defaults with the passed in arugments
@@ -73,9 +73,9 @@ function ImagekitMediaLibraryWidget() {
     this.ikFrame.callback = this.callback;
 
     mainFrame = document.createElement("iframe");
-    mainFrame.title = this.options.name;
+    mainFrame.title = IK_FRAME_TITLE;
     mainFrame.src = `${IK_SRC}&widgetHost=${this.widgetHost}`;
-    mainFrame.sandbox = 'allow-top-navigation allow-same-origin allow-scripts allow-forms';
+    mainFrame.sandbox = 'allow-top-navigation allow-same-origin allow-scripts allow-forms allow-modals';
     mainFrame.height = this.options.dimensions.height;
     mainFrame.width = this.options.dimensions.width;
     mainFrame.style.border = this.options.style.border;
@@ -89,7 +89,7 @@ function ImagekitMediaLibraryWidget() {
       // Append DocumentFragment to body
       container.appendChild(docFragment);
     } else {
-      if (this.options.showOpenButton) {
+      if (this.options.renderOpenButton) {
         // create button
         button = document.createElement("button");
         button.innerHTML = "Open Media Library";
@@ -107,7 +107,7 @@ function ImagekitMediaLibraryWidget() {
       modal.appendChild(modalContent);
 
       // append button and modal to docFragment
-      if (this.options.showOpenButton) {
+      if (this.options.renderOpenButton) {
         docFragment.appendChild(button);
       }
       docFragment.appendChild(modal);

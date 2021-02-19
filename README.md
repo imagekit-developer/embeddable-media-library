@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/imagekit-media-library-widget)](https://www.npmjs.com/package/imagekit-media-library-widget)
 
-This plugin provides access to ImageKit Media Library through an embeddable UI from within your own CMS or website.
+This plugin provides access to ImageKit Media Library through an embeddable UI within your own CMS or website.
 
 ![01-mlw-intro.png](assets/screenshots/01-mlw-intro.png)
 
@@ -12,9 +12,9 @@ This plugin provides access to ImageKit Media Library through an embeddable UI f
 
 1. [Installation](#installation)
 1. [Usage](#usage)
-1. [Development](#development)
 1. [Demo](#demo)
-1. [CKEditor Custom Build](#ckeditor-custom-build)
+1. [Integrations](#integrations)
+    1. [CKEditor](#ckeditor)
 
 ---
 
@@ -67,20 +67,19 @@ or
 <div class="container"></div>
 ```
 
-Write a script to configure, initialize and instantiate the plugin:
+Configure and instantiate the plugin:
 
 ```js
 // configuration options
 var config = {
-  name: 'Media Library Widget',
   container: '#container',   // the element in which the Media Library Widget will be rendered
   className: 'media-library-widget',
   dimensions: {
     height: '100%',
     width: '100%',
   },
-  view: 'modal',  // modal/inline
-  showOpenButton: true,  // default
+  view: 'modal',  // inline | modal (default)
+  renderOpenButton: true,  // false | true (default)
 };
 
 // define callback handler
@@ -95,32 +94,11 @@ var mediaLibraryWidget = new IKMediaLibraryWidget(config, callback);
 
 ![01-mlw.gif](assets/gifs/01-mlw.gif)
 
----
+**Note: Google Chrome (Incognito)**
 
-## Development
+In order to use this plugin on Google Chrome in Incognito mode, you need to enable third-party cookies:
 
-### Clone the repository
-
-```bash
-git clone https://github.com/imagekit-developer/embeddable-media-library.git
-```
-
-### Build the plugin
-
-Navigate to the repository folder:
-
-```bash
-cd embeddable-media-library/
-```
-
-Run npm commands:
-
-```bash
-npm install
-npm run build
-```
-
-The generated files are available under `dist/` folder.
+![07-mlw-incognito.png](assets/screenshots/07-mlw-incognito.png)
 
 ---
 
@@ -137,15 +115,17 @@ The sample app should be available on `http://localhost:3000`.
 
 ---
 
-## CKEditor Custom Build
+## Integrations
 
-This repository includes a custom build for CKEditor 5 that integrates the widget. 
+### CKEditor
+
+This repository includes a custom build for CKEditor 5 that integrates the widget using [imagekit-ckeditor5-plugin](https://www.npmjs.com/package/imagekit-ckeditor5-plugin). 
 
 ![01-mlw-ck.gif](assets/gifs/01-mlw-ck.gif)
 
-### Installing the included CKEditor custom build
+#### Installing the included CKEditor build
 
-Build the custom CKEditor:
+Build the editor:
 
 ```bash
 cd embeddable-media-library/samples/sample-ckeditor/
@@ -180,7 +160,6 @@ Configure it within your web app:
 
   // imagekit media library widget configuration
   var pluginOptions = {
-    name: 'Media Library Widget',
     container: '#container',
     className: 'media-library-widget',
     dimensions: {
