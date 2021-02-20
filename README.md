@@ -14,7 +14,7 @@ This plugin provides access to ImageKit Media Library through an embeddable UI w
 1. [Usage](#usage)
 1. [Demo](#demo)
 1. [Integrations](#integrations)
-    1. [CKEditor](#ckeditor)
+    * [CKEditor](#ckeditor)
 
 ---
 
@@ -96,7 +96,7 @@ var mediaLibraryWidget = new IKMediaLibraryWidget(config, callback);
 
 **Note: Google Chrome (Incognito)**
 
-In order to use this plugin on Google Chrome in Incognito mode, you need to enable third-party cookies:
+To use this plugin on Google Chrome in Incognito mode, you need to enable third-party cookies:
 
 ![07-mlw-incognito.png](assets/screenshots/07-mlw-incognito.png)
 
