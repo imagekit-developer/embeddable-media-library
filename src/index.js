@@ -5,7 +5,8 @@ function ImagekitMediaLibraryWidget() {
   var IK_HOST = 'https://eml.imagekit.io';
   var IK_SRC = `${IK_HOST}/media-library-widget?redirectTo=media-library-widget&isMediaLibraryWidget=true`;
   var IK_FRAME_TITLE = 'ImageKit Embedded Media Library';
-  var insertCallback;
+  var callbackFunction;
+  var view = "modal";
 
   // Define constructor 
   var IKMediaLibraryWidget = function () {
@@ -40,9 +41,10 @@ function ImagekitMediaLibraryWidget() {
     // Set callback function
     if (arguments[1] && typeof arguments[1] === "function") {
       this.callback = arguments[1];
-      insertCallback = this.callback;
+      callbackFunction = this.callback;
     }
 
+    view = this.options.view;
     this.init();
   }
 
@@ -117,13 +119,19 @@ function ImagekitMediaLibraryWidget() {
     }
   }
 
+  function close() {
+    if (view.toLowerCase() === 'modal') {
+      closeModal();
+    }
+  }
+
   function closeModal() {
     modal.style.display = "none";
   }
 
   window.onclick = function (event) {
     if (event.target == modal) {
-      closeModal();
+      close();
     }
   }
 
@@ -133,11 +141,9 @@ function ImagekitMediaLibraryWidget() {
       return;
     }
 
-    if (event.data.eventType === 'CLOSE_MEDIA_LIBRARY_WIDGET') {
-      closeModal();
-    } else if (event.data.eventType === 'INSERT') {
-      insertCallback(event.data);
-      closeModal();
+    if (event.data.eventType === "CLOSE_MEDIA_LIBRARY_WIDGET" || event.data.eventType === "INSERT") {
+      callbackFunction(event.data);
+      close();
     }
   });
 
