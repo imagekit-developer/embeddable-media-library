@@ -34,7 +34,7 @@ jobs:
       with:
         node-version: 14
         registry-url: https://registry.npmjs.org/
-    - name: yarn publish
+    - name: npm publish
       run: |
         npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
         npm install
