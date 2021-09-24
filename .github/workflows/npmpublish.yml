@@ -18,11 +18,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: yarn install and build
+    - name: npm install and build
       run: |
-        npm i -g yarn
-        yarn install
-        yarn build
+        npm install
+        npm run build
       env:
         CI: true
   
@@ -37,10 +36,10 @@ jobs:
         registry-url: https://registry.npmjs.org/
     - name: yarn publish
       run: |
-        npm i -g yarn
-        yarn config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-        yarn install
-        yarn publish         
+        npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+        npm install
+        npm run build
+        npm publish         
       env:
         NODE_AUTH_TOKEN: ${{secrets.npm_token}}
         CI: true
