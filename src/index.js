@@ -43,8 +43,9 @@ function ImagekitMediaLibraryWidget() {
       this.callback = arguments[1];
       callbackFunction = this.callback;
     }
-
-    view = this.options.view;
+    if (this.options?.view) {
+      view = this.options.view;
+    }
     this.init();
   }
 
