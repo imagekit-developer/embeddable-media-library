@@ -36,6 +36,8 @@ function ImagekitMediaLibraryWidget() {
     // Create options by extending defaults with the passed in arugments
     if (arguments[0] && typeof arguments[0] === "object") {
       this.options = Object.assign({}, defaults, arguments[0]);
+    } else {
+      this.options = Object.assign({}, defaults);
     }
 
     // Set callback function
@@ -43,9 +45,8 @@ function ImagekitMediaLibraryWidget() {
       this.callback = arguments[1];
       callbackFunction = this.callback;
     }
-    if (this.options?.view) {
-      view = this.options.view;
-    }
+
+    view = this.options.view;
     this.init();
   }
 
