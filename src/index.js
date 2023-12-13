@@ -79,7 +79,7 @@ function ImagekitMediaLibraryWidget() {
     mainFrame = document.createElement("iframe");
     mainFrame.title = IK_FRAME_TITLE;
     mainFrame.src = `${IK_SRC}&widgetHost=${this.widgetHost}`;
-    mainFrame.sandbox = 'allow-top-navigation allow-same-origin allow-scripts allow-forms allow-modals';
+    mainFrame.sandbox = 'allow-top-navigation allow-same-origin allow-scripts allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox';
     mainFrame.height = this.options.dimensions.height;
     mainFrame.width = this.options.dimensions.width;
     mainFrame.style.border = this.options.style.border;
