@@ -3,7 +3,7 @@ import styles from './styles.css'
 
 function ImagekitMediaLibraryWidget() {
   var IK_HOST = 'https://eml.imagekit.io';
-  var IK_SRC = `${IK_HOST}/media-library-widget?redirectTo=media-library-widget&isMediaLibraryWidget=true`;
+  var IK_SRC = `${IK_HOST}/media-library-widget?isMediaLibraryWidget=true`;
   var IK_FRAME_TITLE = 'ImageKit Embedded Media Library';
   var callbackFunction;
   var view = "modal";
