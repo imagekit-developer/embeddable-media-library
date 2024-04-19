@@ -121,6 +121,18 @@ function ImagekitMediaLibraryWidget() {
     }
   }
 
+  // Method to destroy the widget
+  IKMediaLibraryWidget.prototype.destroy = function () {
+    // Close the widget if it's open
+    close();
+    if(container && container.parentNode) {
+      container.parentNode.removeChild(container);
+    }
+  }
+
+  // Method to close the modal
+  IKMediaLibraryWidget.prototype.close = close;
+
   function close() {
     if (view.toLowerCase() === 'modal') {
       closeModal();
