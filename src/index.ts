@@ -5,7 +5,7 @@ import {
     InitialViewParameterEnum,
 } from './interfaces/index';
 
-class ImagekitMediaLibraryWidget {
+export class ImagekitMediaLibraryWidget {
     private IK_HOST: string = 'https://eml.imagekit.io';
     private IK_FRAME_TITLE: string = 'ImageKit Embedded Media Library';
     private callbackFunction: MediaLibraryWidgetCallback;
@@ -186,4 +186,4 @@ declare global {
 
 window.IKMediaLibraryWidget = ImagekitMediaLibraryWidget;
 
-export default ImagekitMediaLibraryWidget;
+export * from "./interfaces/index"
