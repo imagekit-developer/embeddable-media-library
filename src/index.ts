@@ -1,4 +1,9 @@
-import { MediaLibraryWidgetOptions, MediaLibraryWidgetCallback, MediaLibraryWidgetOptionsExtended, InitialViewParameterEnum } from './interfaces/index';
+import {
+    MediaLibraryWidgetOptions,
+    MediaLibraryWidgetCallback,
+    MediaLibraryWidgetOptionsExtended,
+    InitialViewParameterEnum,
+} from './interfaces/index';
 
 class ImagekitMediaLibraryWidget {
     private IK_HOST: string = 'https://eml.imagekit.io';
@@ -131,11 +136,9 @@ class ImagekitMediaLibraryWidget {
 
         iframe.onload = function () {
             if (iframe.contentWindow) {
-                console.log('sending post message')
                 iframe.contentWindow.postMessage(JSON.stringify({
                     mlSettings: options.mlSettings,
                 }), IK_HOST);
-                console.log('sent post message')
             }
         };
     }
