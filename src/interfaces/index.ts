@@ -1,12 +1,25 @@
-export interface InitialView {
-    searchQuery?: string;
-    folderPath?: string;
-    fileId?: string;
-    collection?: {
-        id?: string;
-    };
-    fileType?: FileTypeValue;
+interface InitialViewUsingSearchQuery {
+  searchQuery: string;
 }
+
+interface InitialViewUsingFolderPath {
+  folderPath: string;
+}
+
+interface InitialViewUsingFileId {
+  fileId: string;
+}
+
+interface InitialViewUsingCollection {
+  collection: {
+    id?: string;
+  };
+}
+
+interface InitialViewUsingFileType {
+  fileType: FileTypeValue;
+}
+export type InitialView = InitialViewUsingSearchQuery | InitialViewUsingFolderPath | InitialViewUsingFileId | InitialViewUsingCollection | InitialViewUsingFileType;
 
 export interface MLSettings {
   initialView?: InitialView;
@@ -16,16 +29,16 @@ export interface MLSettings {
 
 
 export interface MediaLibraryWidgetOptions {
-    className?: string;
-    container: string | HTMLElement;
-    dimensions?: {
-      height: string;
-      width: string;
-    };
-    view?: 'modal' | 'inline';
-    renderOpenButton?: boolean;
-    mlSettings?: MLSettings;
-  }
+  className?: string;
+  container: string | HTMLElement;
+  dimensions?: {
+    height: string;
+    width: string;
+  };
+  view?: 'modal' | 'inline';
+  renderOpenButton?: boolean;
+  mlSettings?: MLSettings;
+}
 export interface MediaLibraryWidgetOptionsExtended extends MediaLibraryWidgetOptions {
   containerDimensions?: {
     height: string;
