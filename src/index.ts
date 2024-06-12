@@ -126,7 +126,7 @@ export class ImagekitMediaLibraryWidget {
             // check if key exists in InitialViewParameterEnum
             const key = Object.keys(this.options.mlSettings.initialView)[0];
             if (Object.values(InitialViewParameterEnum).includes(key as InitialViewParameterEnum)) {
-                return `${this.IK_HOST}/media-library-widget?redirectTo=media-library-widget&isMediaLibraryWidget=true&widgetHost=${this.widgetHost}&mlWidgetInitialView=${JSON.stringify(this.options.mlSettings.initialView)}`;
+                return `${this.IK_HOST}/media-library-widget?redirectTo=media-library-widget&isMediaLibraryWidget=true&widgetHost=${this.widgetHost}&mlWidgetInitialView=${btoa(JSON.stringify(this.options.mlSettings.initialView))}`;
             }
         }
         return `${this.IK_HOST}/media-library-widget?redirectTo=media-library-widget&isMediaLibraryWidget=true&widgetHost=${this.widgetHost}`;
