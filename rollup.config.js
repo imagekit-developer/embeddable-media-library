@@ -2,8 +2,8 @@ import { babel } from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
 import pkg from './package.json';
 import styles from 'rollup-plugin-styles';
-import { terser } from 'rollup-plugin-terser';
-import typescript from '@rollup/plugin-typescript';
+import terser from '@rollup/plugin-terser';
+import typescript from 'rollup-plugin-ts';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 export default [
@@ -12,7 +12,13 @@ export default [
 		input: 'src/index.ts',
 		external: ['src/styles.css'],
 		plugins: [
-			typescript(),
+			typescript({
+				hook: {
+					outputPath: (path, kind) => {
+						return kind === "declaration" ? pkg.types : path
+					}
+				},
+			}),
 			nodeResolve(),
 			babel({ babelHelpers: 'bundled' }),
 			terser(),
@@ -38,7 +44,13 @@ export default [
 		input: 'src/index.ts',
 		external: ['src/styles.css'],
 		plugins: [
-			typescript(),
+			typescript({
+				hook: {
+					outputPath: (path, kind) => {
+						return kind === "declaration" ? pkg.types : path
+					}
+				},
+			}),
 			nodeResolve(),
 			babel({ babelHelpers: 'bundled' }),
 			terser(),
