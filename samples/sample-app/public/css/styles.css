@@ -21,15 +21,6 @@ body {
   height: 100%;
 }
 
-.editor-container {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 22px;
-  width: 80%;
-  height: 70%;
-}
-
 .text-center {
   text-align: center;
 }

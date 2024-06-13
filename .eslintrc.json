@@ -1,0 +1,60 @@
+{
+    "env": {
+      "node": true,
+      "es2020": true,
+      "mocha": true
+    },
+    "extends": ["standard"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+    },
+    "plugins": ["@typescript-eslint", "prettier", "unused-imports"],
+    "rules": {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_"
+        }
+      ],
+      "@typescript-eslint/no-use-before-define": [
+        "error",
+        {
+          "variables": false
+        }
+      ],
+      "@typescript-eslint/promise-function-async": "off",
+      "@typescript-eslint/require-await": "off",
+      "@typescript-eslint/prefer-optional-chain": "error",
+      "no-unused-vars": "error",
+      "quotes": ["error", "double"],
+      "semi": "off",
+      "space-before-function-paren": "off",
+      "no-console": "warn",
+      "one-var-declaration-per-line": "error",
+      "prefer-template": "error",
+      "prefer-arrow-callback": "error",
+      "indent": "off",
+      "comma-dangle": [
+        "error",
+        {
+          "arrays": "always-multiline",
+          "objects": "always-multiline",
+          "imports": "always-multiline",
+          "exports": "always-multiline",
+          "functions": "never"
+        }
+      ]
+    },
+    "overrides": [
+      {
+        "files": ["test/**/*"],
+        "rules": {
+          "no-unused-expressions": "off"
+        }
+      }
+    ]
+  }
+  

@@ -9,21 +9,13 @@
 
 <body>
   <h1 class="text-center">ImageKit Media Library Widget</h1>
-
-  <p class="text-center">Open your ImageKit Media Library by clicking on the ImageKit icon in the middle toolbar and log in.</p>
-  <p class="text-center">Select one or more images from the media library and click the "Insert" button on the panel.</p>
-
-  <div class="editor-container">
-    <div class="editor"></div>
-  </div>
-
   <!-- Inset Media Library -->
   <div class="wrapper">
     <div id="container"></div>
   </div>
 </body>
 
-<script src="static/ckeditor.js"></script>
+<script src="static/imagekit-media-library-widget.min.js"></script>
 
 <script>
   // ckeditor
@@ -37,21 +29,14 @@
       height: '100%',
       width: '100%',
     },
+    view: 'modal',
+    renderOpenButton: "button",
   };
 
-  // initialize ckeditor
-  ClassicEditor
-    .create(document.querySelector('.editor'), {
-        imagekitMediaLibraryWidget: {
-          config: pluginOptions
-        }
-      })
-    .then(newEditor => {
-      editor = newEditor;
-      window.editor = newEditor;
-    }).catch(error => {
-      console.error(error);
-    });
+  // initialize imagekit media library widget
+  var mediaLibraryWidget = new IKMediaLibraryWidget(pluginOptions, (payload) => {
+    console.log(payload);
+  });
 
 </script>
 
