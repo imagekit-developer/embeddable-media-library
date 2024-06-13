@@ -37,7 +37,7 @@
     "dev": "rollup -c -w",
     "build": "rm -rf dist*;rollup -c --bundleConfigAsCjs",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sample": "npm run build && cd samples/sample-app/ && npm i && npm start"
+    "sample": "npm run build && cp dist/imagekit-media-library-widget.min.js samples/sample-app/public && cd samples/sample-app/ && npm i && npm start"
   },
   "repository": {
     "type": "git",

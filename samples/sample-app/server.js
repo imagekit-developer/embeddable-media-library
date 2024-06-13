@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv').config({ path: path.join(__dirname, ".env") });
+const dotenv = require('dotenv').config({ path: path.join(__dirname, "sample.env") });
 
 if (dotenv.error) {
     throw new Error(dotenv.error);
