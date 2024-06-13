@@ -1,7 +1,6 @@
 import { babel } from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
 import pkg from './package.json';
-import styles from 'rollup-plugin-styles';
 import terser from '@rollup/plugin-terser';
 import typescript from 'rollup-plugin-ts';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
@@ -10,7 +9,6 @@ export default [
 	// browser-friendly UMD build
 	{
 		input: 'src/index.ts',
-		external: ['src/styles.css'],
 		plugins: [
 			typescript({
 				hook: {
@@ -23,7 +21,6 @@ export default [
 			babel({ babelHelpers: 'bundled' }),
 			terser(),
 			json(),
-			styles(),
 		],
 		context: 'this',
 		output: {
@@ -42,7 +39,6 @@ export default [
 	// `file` and `format` for each target)
 	{
 		input: 'src/index.ts',
-		external: ['src/styles.css'],
 		plugins: [
 			typescript({
 				hook: {
@@ -55,7 +51,6 @@ export default [
 			babel({ babelHelpers: 'bundled' }),
 			terser(),
 			json(),
-			styles()
 		],
 		output: [
 			{
