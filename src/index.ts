@@ -39,14 +39,49 @@ export class ImagekitMediaLibraryWidget {
         // Create global element references
         this.widgetHost = window.location.href;
         // Define option defaults 
-        const defaults = this.getDefaultOptions();
+        this.options = this.getDefaultOptions();
         // Create options by extending defaults with the passed in arguments
-        this.options = Object.assign({}, defaults, options);
-        this.callbackFunction = callback;
+        if (options && typeof options === 'object') {
+            Object.assign(this.options, options);
+        }
+        // Set callback function
+        this.callbackFunction = callback && typeof callback === "function" ? callback : () => {};
+
         this.view = this.options.view;
+        this.registerStyles();
         this.buildOut();
-        this.setListeners.bind(this)
         this.setListeners(this.modal!, this.callbackFunction, this.IK_HOST, this.close.bind(this));
+    }
+
+    private registerStyles(): void { 
+        const style = document.createElement('style');
+        style.innerHTML = `
+            /* The Modal (background) */
+            .ik-media-library-widget-modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 2%; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+            
+            /* Modal Content */
+            .ik-media-library-widget-modal-content {
+                background-color: #fefefe;
+                margin: auto;
+                /* padding: 5px; */
+                border: 1px solid #888;
+                width: 96%;
+                height: 94%;
+            }        
+        `;
+        document.head.appendChild(style);
     }
 
     private buildOut(): void {
@@ -73,7 +108,7 @@ export class ImagekitMediaLibraryWidget {
         mainFrame = document.createElement("iframe");
         mainFrame.title = this.IK_FRAME_TITLE;
         mainFrame.src = this.generateInitialUrl();
-        mainFrame.setAttribute('sandbox', 'allow-top-navigation allow-same-origin allow-scripts allow-forms allow-modals');
+        mainFrame.setAttribute('sandbox', 'allow-top-navigation allow-same-origin allow-scripts allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox');
         mainFrame.height = this.options?.dimensions?.height || "100%";
         mainFrame.width = this.options?.dimensions?.width || "100%";
         mainFrame.style.border = this.options.style.border;
