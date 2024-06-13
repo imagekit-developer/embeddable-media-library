@@ -45,7 +45,7 @@ const IKMediaLibraryWidgetCore = require("imagekit-media-library-widget");
 
 ## Usage
 
-Check out our detailed guide on ImageKit Docs: [Media Library Widget](https://docs.imagekit.io/sample-projects/imagekit-media-library-widget)
+Check out our detailed guide on ImageKit Docs: [Media Library Widget](https://docs.imagekit.io/sample-projects/embeddable-media-library-widget)
 
 ### Quick start (HTML and JS)
 
@@ -80,9 +80,21 @@ var config = {
   renderOpenButton: true,  // false | true (default)
   /*
   mlSettings: {  // optional
-  // sets initial state of Media Library, check the document link in 'Usage' section for more information
-    initialView: { 
-      folderPath: "<your-folder-path>"
+    initialView: {  
+      
+      // sets initial state of Media Library, refer to the ImageKit Docs for more information
+      // https://docs.imagekit.io/sample-projects/embeddable-media-library-widget
+
+      // only one of the following parameters can be passed at a time
+    
+      folderPath: "<your-folder-path>",
+      fileId: "<file_id>",
+      searchQuery: "<search-query>",
+      collection: { 
+         // pass empty object to open Media Collections page
+         id: "<collection-id>" // open specific Media Collection
+      },
+      fileType: "images" | "videos" | "cssJs" | "others"
     },
     multiple: true // false | true (default)
     maxFiles: 20 // relevant when `multiple` is true
