@@ -14,6 +14,10 @@ export class ImagekitMediaLibraryWidget {
     private options: MediaLibraryWidgetOptionsExtended;
     private modal: HTMLDivElement | undefined;
     private ikFrame!: HTMLDivElement;
+    private styleEl: HTMLStyleElement | undefined;
+
+    private windowClickHandler: (event: MouseEvent) => void;
+    private messageHandler: (event: MessageEvent) => void;
 
     private getDefaultOptions(): MediaLibraryWidgetOptionsExtended {
         return {
@@ -48,14 +52,32 @@ export class ImagekitMediaLibraryWidget {
         this.callbackFunction = callback && typeof callback === "function" ? callback : () => {};
 
         this.view = this.options.view;
+
+        // Initialize event handlers for later removal
+        this.windowClickHandler = (event: MouseEvent) => {
+            if (this.modal && event.target === this.modal) {
+                this.close();
+            }
+        };
+
+        this.messageHandler = (event: MessageEvent) => {
+            if (event.origin !== this.IK_HOST) {
+                return;
+            }
+            if (event.data.eventType === "CLOSE_MEDIA_LIBRARY_WIDGET" || event.data.eventType === "INSERT") {
+                this.callbackFunction(event.data);
+                this.close();
+            }
+        };
+
         this.registerStyles();
         this.buildOut();
-        this.setListeners(this.modal!, this.callbackFunction, this.IK_HOST, this.close.bind(this));
+        this.setListeners();
     }
 
-    private registerStyles(): void { 
-        const style = document.createElement('style');
-        style.innerHTML = `
+    private registerStyles(): void {
+        this.styleEl = document.createElement('style');
+        this.styleEl.innerHTML = `
             /* The Modal (background) */
             .ik-media-library-widget-modal {
                 display: none; /* Hidden by default */
@@ -75,13 +97,12 @@ export class ImagekitMediaLibraryWidget {
             .ik-media-library-widget-modal-content {
                 background-color: #fefefe;
                 margin: auto;
-                /* padding: 5px; */
                 border: 1px solid #888;
                 width: 96%;
                 height: 94%;
-            }        
+            }
         `;
-        document.head.appendChild(style);
+        document.head.appendChild(this.styleEl);
     }
 
     private buildOut(): void {
@@ -102,8 +123,6 @@ export class ImagekitMediaLibraryWidget {
         this.ikFrame.className = this.options.className || ""; // Assign an empty string as the default value
         this.ikFrame.style.height = this.options?.containerDimensions?.height || "100%";
         this.ikFrame.style.width = this.options?.containerDimensions?.width || "100%";
-        // this.ikFrame.callback = this.callbackFunction;
-
 
         mainFrame = document.createElement("iframe");
         mainFrame.title = this.IK_FRAME_TITLE;
@@ -127,7 +146,9 @@ export class ImagekitMediaLibraryWidget {
                 button = document.createElement("button");
                 button.innerHTML = "Open Media Library";
                 button.onclick = () => {
-                    modal.style.display = "block";
+                    if (this.modal) {
+                        this.modal.style.display = "block";
+                    }
                 }
             }
 
@@ -168,7 +189,6 @@ export class ImagekitMediaLibraryWidget {
     }
 
     private postMessageOnLoad(iframe: HTMLIFrameElement, options: MediaLibraryWidgetOptionsExtended, IK_HOST: string) {
-
         iframe.onload = function () {
             if (iframe.contentWindow) {
                 iframe.contentWindow.postMessage(JSON.stringify({
@@ -178,6 +198,13 @@ export class ImagekitMediaLibraryWidget {
         };
     }
 
+
+    public open(): void {
+        if (this.view?.toLowerCase() === 'modal' && this.modal) {
+            this.modal.style.display = "block";
+        }
+    }
+
     private close(): void {
         if (this.view?.toLowerCase() === 'modal') {
             this.closeModal();
@@ -185,30 +212,31 @@ export class ImagekitMediaLibraryWidget {
     }
 
     private closeModal(): void {
-        if(this.modal)
-        {
+        if (this.modal) {
             this.modal.style.display = "none";
         }
     }
 
-    private setListeners(modal: HTMLDivElement, callbackFunction: MediaLibraryWidgetCallback, IK_HOST: string, close: () => void): void {
+    public destroy(): void {
+        window.removeEventListener("click", this.windowClickHandler);
+        window.removeEventListener("message", this.messageHandler);
 
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                close();
-            }
+        if (this.modal) {
+            this.modal.remove();
+            this.modal = undefined;
+        } else if (this.ikFrame && this.ikFrame.parentNode) {
+            this.ikFrame.parentNode.removeChild(this.ikFrame);
         }
-        // Called sometime after postMessage is called
-        window.addEventListener("message", function (event) {
-            if (event.origin !== IK_HOST) {
-                return;
-            }
 
-            if (event.data.eventType === "CLOSE_MEDIA_LIBRARY_WIDGET" || event.data.eventType === "INSERT") {
-                callbackFunction(event.data);
-                close();
-            }
-        });
+        if (this.styleEl) {
+            this.styleEl.remove();
+            this.styleEl = undefined;
+        }
+    }
+
+    private setListeners(): void {
+        window.addEventListener("click", this.windowClickHandler);
+        window.addEventListener("message", this.messageHandler);
     }
 
 }
