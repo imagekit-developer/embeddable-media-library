@@ -127,7 +127,7 @@ export class ImagekitMediaLibraryWidget {
         mainFrame = document.createElement("iframe");
         mainFrame.title = this.IK_FRAME_TITLE;
         mainFrame.src = this.generateInitialUrl();
-        mainFrame.setAttribute('sandbox', 'allow-top-navigation allow-same-origin allow-scripts allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox');
+        mainFrame.setAttribute('sandbox', 'allow-top-navigation allow-same-origin allow-scripts allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-downloads');
         mainFrame.height = this.options?.dimensions?.height || "100%";
         mainFrame.width = this.options?.dimensions?.width || "100%";
         mainFrame.style.border = this.options.style.border;
