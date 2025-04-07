@@ -98,6 +98,12 @@ var config = {
     },
     multiple: true // false | true (default)
     maxFiles: 20 // relevant when `multiple` is true
+    toolbar: {
+      // sets the visibility of the toolbar buttons
+      // defaults to true for all buttons
+      showCloseButton: false,
+      showInsertButton: false
+    }
   }
   */
 };

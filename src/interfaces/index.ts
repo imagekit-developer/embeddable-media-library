@@ -21,12 +21,17 @@ interface InitialViewUsingFileType {
 }
 export type InitialView = InitialViewUsingSearchQuery | InitialViewUsingFolderPath | InitialViewUsingFileId | InitialViewUsingCollection | InitialViewUsingFileType;
 
+export interface ToolbarOptions {
+  showCloseButton?: boolean;
+  showInsertButton?: boolean;
+}
+
 export interface MLSettings {
   initialView?: InitialView;
   multiple?: boolean;
   maxFiles?: number;
+  toolbar?: ToolbarOptions;
 }
-
 
 export interface MediaLibraryWidgetOptions {
   className?: string;
