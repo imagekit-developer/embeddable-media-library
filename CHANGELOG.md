@@ -1,3 +1,7 @@
+# 2.1.1
+
+- feat: Added support for controlling the close and insert button visibility states
+
 # 2.1.0
 
 - fix: Added allow-downloads permission to iframe sandbox attributes
