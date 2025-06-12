@@ -94,7 +94,7 @@ var config = {
          // pass empty object to open Media Collections page
          id: "<collection-id>" // open specific Media Collection
       },
-      fileType: "images" | "videos" | "cssJs" | "others"
+      fileType: "image" | "video" | "cssJs" | "others"
     },
     multiple: true // false | true (default)
     maxFiles: 20 // relevant when `multiple` is true
