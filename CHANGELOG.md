@@ -1,3 +1,9 @@
+# 2.3.1
+
+- fix: Added message source validation to prevent cross-origin message spoofing
+- feat: Added clipboard-write permission to iframe allow attribute
+- refactor: Store iframe reference to avoid DOM queries
+
 # 2.3.0
 
 - feat: Added `loginViaSSO` and `widgetImagekitId` parameters in `mlSettings`.
