@@ -18,6 +18,7 @@ export class ImagekitMediaLibraryWidget {
 
     private windowClickHandler: (event: MouseEvent) => void;
     private messageHandler: (event: MessageEvent) => void;
+    private iframe: HTMLIFrameElement | undefined;
 
     private getDefaultOptions(): MediaLibraryWidgetOptionsExtended {
         return {
@@ -64,6 +65,7 @@ export class ImagekitMediaLibraryWidget {
             if (event.origin !== this.IK_HOST) {
                 return;
             }
+            if (event.source !== this.iframe?.contentWindow) return;
             if (event.data.eventType === "CLOSE_MEDIA_LIBRARY_WIDGET" || event.data.eventType === "INSERT") {
                 this.callbackFunction(event.data);
                 this.close();
@@ -128,10 +130,12 @@ export class ImagekitMediaLibraryWidget {
         mainFrame.title = this.IK_FRAME_TITLE;
         mainFrame.src = this.generateInitialUrl();
         mainFrame.setAttribute('sandbox', 'allow-top-navigation allow-same-origin allow-scripts allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-downloads');
+        mainFrame.setAttribute('allow', 'clipboard-write');
         mainFrame.height = this.options?.dimensions?.height || "100%";
         mainFrame.width = this.options?.dimensions?.width || "100%";
         mainFrame.style.border = this.options.style.border;
 
+        this.iframe = mainFrame;
         this.ikFrame.appendChild(mainFrame);
 
         if (this.view?.toLowerCase() !== 'modal') {
@@ -171,9 +175,8 @@ export class ImagekitMediaLibraryWidget {
             if (container) container.appendChild(docFragment);
         }
 
-        const iframe = document.querySelector(`[title="${this.IK_FRAME_TITLE}"]`) as HTMLIFrameElement;
-        if (iframe) {
-            this.postMessageOnLoad(iframe, this.options, this.IK_HOST);
+        if (this.iframe) {
+            this.postMessageOnLoad(this.iframe, this.options, this.IK_HOST);
         }
     }
 
