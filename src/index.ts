@@ -19,6 +19,7 @@ export class ImagekitMediaLibraryWidget {
     private windowClickHandler: (event: MouseEvent) => void;
     private messageHandler: (event: MessageEvent) => void;
     private iframe: HTMLIFrameElement | undefined;
+    private loadingOverlay: HTMLDivElement | undefined;
 
     private getDefaultOptions(): MediaLibraryWidgetOptionsExtended {
         return {
@@ -102,6 +103,39 @@ export class ImagekitMediaLibraryWidget {
                 border: 1px solid #888;
                 width: 96%;
                 height: 94%;
+                position: relative;
+            }
+
+            /* Loading overlay */
+            .ik-media-library-widget-loading-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(255, 255, 255, 0.9);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10;
+            }
+
+            .ik-media-library-widget-loading-spinner {
+                border: 4px solid #f3f3f3;
+                border-top: 4px solid #3498db;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                animation: ik-media-library-widget-spin 1s linear infinite;
+            }
+
+            @keyframes ik-media-library-widget-spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+
+            .ik-media-library-widget-loading-overlay.hidden {
+                display: none;
             }
         `;
         document.head.appendChild(this.styleEl);
@@ -161,6 +195,16 @@ export class ImagekitMediaLibraryWidget {
             const modalContent = document.createElement("div");
             modal.classList.add("ik-media-library-widget-modal");
             modalContent.classList.add("ik-media-library-widget-modal-content");
+
+            // create loading overlay
+            const loadingOverlay = document.createElement("div");
+            loadingOverlay.classList.add("ik-media-library-widget-loading-overlay", "hidden");
+            const spinner = document.createElement("div");
+            spinner.classList.add("ik-media-library-widget-loading-spinner");
+            loadingOverlay.appendChild(spinner);
+            this.loadingOverlay = loadingOverlay;
+            modalContent.appendChild(loadingOverlay);
+
             modalContent.appendChild(this.ikFrame);
             modal.appendChild(modalContent);
             this.modal = modal;
@@ -176,7 +220,8 @@ export class ImagekitMediaLibraryWidget {
         }
 
         if (this.iframe) {
-            this.postMessageOnLoad(this.iframe, this.options, this.IK_HOST);
+            this.setLoading(true);
+            this.setupIframeLoadHandler();
         }
     }
 
@@ -216,18 +261,53 @@ export class ImagekitMediaLibraryWidget {
         return `${baseUrl}?${params.toString()}`;
     }
 
-    private postMessageOnLoad(iframe: HTMLIFrameElement, options: MediaLibraryWidgetOptionsExtended, IK_HOST: string) {
-        iframe.onload = function () {
-            if (iframe.contentWindow) {
-                iframe.contentWindow.postMessage(JSON.stringify({
-                    mlSettings: options.mlSettings,
-                }), IK_HOST);
+    private setLoading(isLoading: boolean): void {
+        if (!this.loadingOverlay) return;
+        if (isLoading) {
+            this.loadingOverlay.classList.remove("hidden");
+            if (this.iframe) {
+                this.iframe.style.visibility = "hidden";
             }
-        };
+        } else {
+            this.loadingOverlay.classList.add("hidden");
+            if (this.iframe) {
+                this.iframe.style.visibility = "visible";
+            }
+        }
+    }
+
+    private setupIframeLoadHandler() {
+        const self = this;
+        if (self.iframe) {
+            self.iframe.onload = function () {
+                if (self.iframe && self.iframe.contentWindow) {
+                    self.iframe.contentWindow.postMessage(JSON.stringify({
+                        mlSettings: self.options.mlSettings,
+                    }), self.IK_HOST);
+                }
+                self.setLoading(false);
+            };
+        }
     }
 
 
-    public open(): void {
+    public open(settings?: Partial<Pick<MediaLibraryWidgetOptions, 'mlSettings'>>, callback?: MediaLibraryWidgetCallback): void {
+        if (callback && typeof callback === "function") {
+            this.callbackFunction = callback;
+        }
+
+        if (settings) {
+            settings.mlSettings = settings.mlSettings || {};
+            this.options.mlSettings = Object.assign({}, settings.mlSettings);
+        }
+
+            if (this.iframe) {
+                this.setLoading(true);
+                this.iframe.src = this.generateInitialUrl();
+                this.setupIframeLoadHandler();
+            }
+
+
         if (this.view?.toLowerCase() === 'modal' && this.modal) {
             this.modal.style.display = "block";
         }
@@ -260,6 +340,9 @@ export class ImagekitMediaLibraryWidget {
             this.styleEl.remove();
             this.styleEl = undefined;
         }
+
+        // Clear iframe reference
+        this.iframe = undefined;
     }
 
     private setListeners(): void {
