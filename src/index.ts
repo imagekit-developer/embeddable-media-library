@@ -301,11 +301,11 @@ export class ImagekitMediaLibraryWidget {
             this.options.mlSettings = Object.assign({}, settings.mlSettings);
         }
 
-            if (this.iframe) {
-                this.setLoading(true);
-                this.iframe.src = this.generateInitialUrl();
-                this.setupIframeLoadHandler();
-            }
+        if (this.iframe) {
+            this.setLoading(true);
+            this.iframe.src = this.generateInitialUrl();
+            this.setupIframeLoadHandler();
+        }
 
 
         if (this.view?.toLowerCase() === 'modal' && this.modal) {
