@@ -296,8 +296,7 @@ export class ImagekitMediaLibraryWidget {
         }
 
         if (settings) {
-            this.options.mlSettings = Object.assign({}, settings.mlSettings || {});
-
+            this.options.mlSettings = structuredClone(settings.mlSettings || {});
             if (this.iframe) {
                 this.setLoading(true);
                 this.iframe.src = this.generateInitialUrl();
