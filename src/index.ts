@@ -296,8 +296,7 @@ export class ImagekitMediaLibraryWidget {
         }
 
         if (settings) {
-            settings.mlSettings = settings.mlSettings || {};
-            this.options.mlSettings = Object.assign({}, settings.mlSettings);
+            this.options.mlSettings = Object.assign({}, settings.mlSettings || {});
 
             if (this.iframe) {
                 this.setLoading(true);
