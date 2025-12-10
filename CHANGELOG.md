@@ -1,3 +1,9 @@
+# 2.4.0
+
+- feat: Added ability to update `mlSettings` and callback dynamically via `open()` method
+- feat: Added loading state with spinner overlay during iframe reload
+- refactor: Refactored code for improved structure and readability
+
 # 2.3.1
 
 - fix: Added message source validation to prevent cross-origin message spoofing
