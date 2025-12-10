@@ -1,3 +1,7 @@
+# 2.4.1
+
+- fix: Added loading overlay for inline view (previously only available in modal view)
+
 # 2.4.0
 
 - feat: Added ability to update `mlSettings` and callback dynamically via `open()` method
