@@ -173,6 +173,18 @@ export class ImagekitMediaLibraryWidget {
         this.ikFrame.appendChild(mainFrame);
 
         if (this.view?.toLowerCase() !== 'modal') {
+            // Add relative positioning for loading overlay
+            this.ikFrame.style.position = "relative";
+
+            // create loading overlay for inline view
+            const loadingOverlay = document.createElement("div");
+            loadingOverlay.classList.add("ik-media-library-widget-loading-overlay", "hidden");
+            const spinner = document.createElement("div");
+            spinner.classList.add("ik-media-library-widget-loading-spinner");
+            loadingOverlay.appendChild(spinner);
+            this.loadingOverlay = loadingOverlay;
+            this.ikFrame.appendChild(loadingOverlay);
+
             // Append ikFrame to DocumentFragment
             docFragment.appendChild(this.ikFrame);
 
@@ -337,8 +349,9 @@ export class ImagekitMediaLibraryWidget {
             this.styleEl = undefined;
         }
 
-        // Clear iframe reference
+        // Clear references
         this.iframe = undefined;
+        this.loadingOverlay = undefined;
     }
 
     private setListeners(): void {
