@@ -277,15 +277,14 @@ export class ImagekitMediaLibraryWidget {
     }
 
     private setupIframeLoadHandler() {
-        const self = this;
-        if (self.iframe) {
-            self.iframe.onload = function () {
-                if (self.iframe && self.iframe.contentWindow) {
-                    self.iframe.contentWindow.postMessage(JSON.stringify({
-                        mlSettings: self.options.mlSettings,
-                    }), self.IK_HOST);
+        if (this.iframe) {
+            this.iframe.onload = () => {
+                if (this.iframe && this.iframe.contentWindow) {
+                    this.iframe.contentWindow.postMessage(JSON.stringify({
+                        mlSettings: this.options.mlSettings,
+                    }), this.IK_HOST);
                 }
-                self.setLoading(false);
+                this.setLoading(false);
             };
         }
     }
@@ -299,14 +298,13 @@ export class ImagekitMediaLibraryWidget {
         if (settings) {
             settings.mlSettings = settings.mlSettings || {};
             this.options.mlSettings = Object.assign({}, settings.mlSettings);
-        }
 
-        if (this.iframe) {
-            this.setLoading(true);
-            this.iframe.src = this.generateInitialUrl();
-            this.setupIframeLoadHandler();
+            if (this.iframe) {
+                this.setLoading(true);
+                this.iframe.src = this.generateInitialUrl();
+                this.setupIframeLoadHandler();
+            }
         }
-
 
         if (this.view?.toLowerCase() === 'modal' && this.modal) {
             this.modal.style.display = "block";
