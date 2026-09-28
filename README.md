@@ -136,6 +136,7 @@ If a user's email belongs to more than one ImageKit account, the widget can show
 
 - The option only appears when the logged-in user has access to more than one account.
 - When `mlSettings.widgetImagekitId` is set, the widget stays on that account and the **Switch account** option is not shown.
+- When the widget is opened with a signed login link, the **Switch account** option is not shown.
 - After switching, the widget reloads in the selected account and opens the `initialView` passed in `mlSettings`, if any.
 
 **Note: Google Chrome (Incognito)**

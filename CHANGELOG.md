@@ -1,6 +1,6 @@
 # 2.5.0
 
-- feat: Added `showAccountSwitcher` option in `mlSettings.toolbar` to control the Switch account option for users with access to multiple ImageKit accounts (off by default, always hidden when `widgetImagekitId` is set)
+- feat: Added `showAccountSwitcher` option in `mlSettings.toolbar` to control the Switch account option for users with access to multiple ImageKit accounts (off by default, always hidden when `widgetImagekitId` is set or the widget is opened with a signed login link)
 
 # 2.4.1
 
