@@ -78,6 +78,10 @@
       border-top: 1px solid var(--line);
     }
 
+    .group[hidden] {
+      display: none;
+    }
+
     .group h2 {
       margin: 0 0 12px;
       font-size: 13px;
@@ -456,7 +460,7 @@
           </div>
         </section>
 
-        <section class="group">
+        <section class="group" id="signedLoginGroup" hidden>
           <h2>Signed login</h2>
           <div class="switches">
             <label class="switch-row">
@@ -593,6 +597,7 @@
       } catch (e) {
         signedLogin = { configured: false, error: 'Could not reach the playground server.' };
       }
+      byId('signedLoginGroup').hidden = !signedLogin.configured;
       renderSignedLoginStatus();
     }
 
