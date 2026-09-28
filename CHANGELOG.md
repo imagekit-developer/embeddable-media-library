@@ -1,6 +1,7 @@
 # 2.5.0
 
 - feat: Added `showAccountSwitcher` option in `mlSettings.toolbar` to control the Switch account option for users with access to multiple ImageKit accounts (off by default, always hidden when `widgetImagekitId` is set or the widget is opened with a signed login link)
+- feat: The widget now sends its version to the Media Library. From 2.5.0 the toolbar shows Switch account and Log out in one account menu; older widget versions keep separate buttons
 
 # 2.4.1
 
