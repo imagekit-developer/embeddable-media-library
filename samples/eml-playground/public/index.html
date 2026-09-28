@@ -78,7 +78,8 @@
       border-top: 1px solid var(--line);
     }
 
-    .group[hidden] {
+    .group[hidden],
+    .switches[hidden] {
       display: none;
     }
 
@@ -408,7 +409,7 @@
               <label for="view-inline">Inline</label>
             </div>
           </div>
-          <div class="switches">
+          <div class="switches" id="renderOpenButtonOption">
             <label class="switch-row">
               <span>renderOpenButton</span>
               <input type="checkbox" id="renderOpenButton" checked>
@@ -674,6 +675,16 @@
 
     byId('useSignedLogin').addEventListener('change', renderSignedLoginStatus);
 
+    function syncViewOptions() {
+      var view = document.querySelector('input[name="view"]:checked').value;
+      byId('renderOpenButtonOption').hidden = view !== 'modal';
+    }
+
+    document.querySelectorAll('input[name="view"]').forEach(function (radio) {
+      radio.addEventListener('change', syncViewOptions);
+    });
+
+    syncViewOptions();
 
     checkSignedLoginStatus();
   </script>
