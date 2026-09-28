@@ -158,3 +158,15 @@ npm run sample
 It will install dependencies and serve the included demo: `sample-app`.
 The sample app should be available on `http://localhost:3000`.
 
+### Playground
+
+For trying out options while developing, run:
+
+```bash
+npm run playground
+```
+
+It builds the widget and serves `samples/eml-playground` on `http://127.0.0.1:3005`: a settings form for the widget, `mlSettings` and toolbar options, and a log of the `INSERT` and `CLOSE` callbacks. The **EML host** field points the widget at a different host.
+
+To test logins with a signed link, copy `samples/eml-playground/sample.env` to `samples/eml-playground/.env`, fill in your account's public and private API keys, and restart the playground. The signature is created by the playground server, so the private key never reaches the browser. The signed login options only appear when both keys are set.
+
