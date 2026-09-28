@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>EML Playground</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      color: #1f2937;
+      background: #f3f4f6;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      height: 100%;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px;
+      overflow-y: auto;
+      background: #fff;
+      border-right: 1px solid #e5e7eb;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    fieldset {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 0;
+      padding: 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+    }
+
+    legend {
+      padding: 0 4px;
+      font-weight: bold;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label.inline {
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+      padding: 6px 8px;
+      font: inherit;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    button {
+      flex: 1;
+      padding: 8px;
+      font: inherit;
+      cursor: pointer;
+      border: 1px solid #2563eb;
+      border-radius: 4px;
+      background: #2563eb;
+      color: #fff;
+    }
+
+    button.secondary {
+      background: #fff;
+      color: #2563eb;
+    }
+
+    .status {
+      padding: 8px;
+      border-radius: 4px;
+      background: #eef2ff;
+      word-break: break-all;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .hint.error {
+      padding: 8px;
+      border: 1px solid #fca5a5;
+      border-radius: 4px;
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .main {
+      display: grid;
+      grid-template-rows: 1fr 220px;
+      min-width: 0;
+      height: 100%;
+    }
+
+    #widget-root {
+      position: relative;
+      min-height: 0;
+      padding: 16px;
+    }
+
+    .log-panel {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      border-top: 1px solid #e5e7eb;
+      background: #111827;
+      color: #e5e7eb;
+    }
+
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 12px;
+      background: #1f2937;
+    }
+
+    .log-header button {
+      flex: none;
+      padding: 2px 10px;
+    }
+
+    #log {
+      flex: 1;
+      margin: 0;
+      padding: 8px 12px;
+      overflow-y: auto;
+      font-family: Menlo, Consolas, monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h1>EML Playground</h1>
+
+      <fieldset>
+        <legend>Widget</legend>
+        <label>
+          EML host
+          <input type="text" id="host" value="https://eml.imagekit.io">
+        </label>
+        <label>
+          View
+          <select id="view">
+            <option value="modal">modal</option>
+            <option value="inline">inline</option>
+          </select>
+        </label>
+        <label class="inline">
+          <input type="checkbox" id="renderOpenButton" checked>
+          renderOpenButton
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>mlSettings</legend>
+        <label>
+          widgetImagekitId
+          <input type="text" id="widgetImagekitId" placeholder="optional">
+        </label>
+        <label class="inline">
+          <input type="checkbox" id="loginViaSSO">
+          loginViaSSO
+        </label>
+        <label class="inline">
+          <input type="checkbox" id="multiple" checked>
+          multiple
+        </label>
+        <label>
+          maxFiles
+          <input type="number" id="maxFiles" min="1" placeholder="optional">
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Toolbar</legend>
+        <label class="inline">
+          <input type="checkbox" id="showInsertButton" checked>
+          showInsertButton
+        </label>
+        <label class="inline">
+          <input type="checkbox" id="showCloseButton" checked>
+          showCloseButton
+        </label>
+        <label class="inline">
+          <input type="checkbox" id="showLogoutButton" checked>
+          showLogoutButton
+        </label>
+        <label class="inline">
+          <input type="checkbox" id="showAccountSwitcher" checked>
+          showAccountSwitcher
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Signed login</legend>
+        <label class="inline">
+          <input type="checkbox" id="useSignedLogin">
+          Use signed login link
+        </label>
+        <label>
+          User email
+          <input type="text" id="signedEmail" placeholder="you@company.com">
+        </label>
+        <label>
+          Expires in (minutes)
+          <input type="number" id="signedExpiry" min="1" max="720" value="60">
+        </label>
+        <div class="hint" id="signedStatus">Checking server keys...</div>
+      </fieldset>
+
+      <div class="buttons">
+        <button id="create">Create widget</button>
+      </div>
+      <div class="buttons">
+        <button id="open" class="secondary">Open</button>
+        <button id="destroy" class="secondary">Destroy</button>
+      </div>
+
+      <div class="status" id="status">No widget yet</div>
+    </aside>
+
+    <main class="main">
+      <div id="widget-root"></div>
+      <section class="log-panel">
+        <div class="log-header">
+          <strong>Event log</strong>
+          <button id="clear-log" class="secondary">Clear</button>
+        </div>
+        <pre id="log"></pre>
+      </section>
+    </main>
+  </div>
+
+  <script src="imagekit-media-library-widget.min.js"></script>
+  <script>
+    var DEFAULT_HOST = 'https://eml.imagekit.io';
+    var widget = null;
+
+    function byId(id) {
+      return document.getElementById(id);
+    }
+
+    function log(label, data) {
+      var line = '[' + new Date().toLocaleTimeString() + '] ' + label;
+      if (data !== undefined) {
+        line += '\n' + JSON.stringify(data, null, 2);
+      }
+      var logEl = byId('log');
+      logEl.textContent += line + '\n\n';
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function setStatus(text) {
+      byId('status').textContent = text;
+    }
+
+    function readMlSettings() {
+      var mlSettings = {
+        multiple: byId('multiple').checked,
+        toolbar: {
+          showInsertButton: byId('showInsertButton').checked,
+          showCloseButton: byId('showCloseButton').checked,
+          showLogoutButton: byId('showLogoutButton').checked,
+          showAccountSwitcher: byId('showAccountSwitcher').checked
+        }
+      };
+
+      var maxFiles = parseInt(byId('maxFiles').value, 10);
+      if (maxFiles > 0) {
+        mlSettings.maxFiles = maxFiles;
+      }
+
+      var widgetImagekitId = byId('widgetImagekitId').value.trim();
+      if (widgetImagekitId) {
+        mlSettings.widgetImagekitId = widgetImagekitId;
+      }
+
+      if (byId('loginViaSSO').checked) {
+        mlSettings.loginViaSSO = true;
+      }
+
+      return mlSettings;
+    }
+
+    function destroyWidget() {
+      if (widget) {
+        widget.destroy();
+        widget = null;
+      }
+      byId('widget-root').innerHTML = '';
+    }
+
+    function onWidgetEvent(payload) {
+      log('Callback: ' + (payload && payload.eventType), payload);
+    }
+
+    async function fetchSignedLoginParams() {
+      var params = new URLSearchParams({
+        email: byId('signedEmail').value.trim(),
+        expiresInMinutes: byId('signedExpiry').value
+      });
+      var response = await fetch('/signed-login?' + params.toString());
+      var body = await response.json();
+      if (!response.ok) {
+        throw new Error(body.error || 'Failed to create signed login link');
+      }
+      return body;
+    }
+
+    var signedLogin = { configured: false, error: 'Checking server keys...' };
+
+    function renderSignedLoginStatus() {
+      var statusEl = byId('signedStatus');
+      var showError = byId('useSignedLogin').checked && !signedLogin.configured;
+      statusEl.classList.toggle('error', showError);
+      statusEl.textContent = signedLogin.configured
+        ? 'Server has API keys. The signature is made on the server; the private key never reaches this page.'
+        : signedLogin.error;
+    }
+
+    async function checkSignedLoginStatus() {
+      try {
+        var response = await fetch('/signed-login/status');
+        var body = await response.json();
+        signedLogin = { configured: body.configured, error: body.error };
+      } catch (e) {
+        signedLogin = { configured: false, error: 'Could not reach the playground server.' };
+      }
+      renderSignedLoginStatus();
+    }
+
+    async function createWidget() {
+      var mlSettings = readMlSettings();
+
+      if (byId('useSignedLogin').checked) {
+        if (!signedLogin.configured) {
+          renderSignedLoginStatus();
+          setStatus(signedLogin.error);
+          log('Signed login failed: ' + signedLogin.error);
+          return;
+        }
+        try {
+          var signedParams = await fetchSignedLoginParams();
+          mlSettings.queryParams = signedParams;
+          log('Signed login link created', {
+            userEmail: signedParams.userEmail,
+            expiresAt: new Date(Number(signedParams.expiresAtUnix) * 1000).toLocaleString()
+          });
+        } catch (e) {
+          setStatus(e.message);
+          log('Signed login failed: ' + e.message);
+          return;
+        }
+      }
+
+      destroyWidget();
+
+      var view = byId('view').value;
+      var host = byId('host').value.trim().replace(/\/+$/, '') || DEFAULT_HOST;
+
+      if (view === 'inline') {
+        byId('widget-root').style.height = '100%';
+      }
+
+      widget = new IKMediaLibraryWidget({
+        container: '#widget-root',
+        className: 'media-library-widget',
+        view: view,
+        renderOpenButton: byId('renderOpenButton').checked,
+        mlSettings: mlSettings
+      }, onWidgetEvent);
+
+      if (host !== DEFAULT_HOST) {
+        widget.IK_HOST = host;
+        widget.open({ mlSettings: mlSettings });
+      }
+
+      setStatus('Widget created (' + view + ') pointing at ' + host);
+      log('Widget created', { view: view, host: host, mlSettings: mlSettings });
+    }
+
+    byId('create').addEventListener('click', createWidget);
+
+    byId('open').addEventListener('click', function () {
+      if (!widget) {
+        setStatus('Create a widget first');
+        return;
+      }
+      widget.open();
+      log('open() called');
+    });
+
+    byId('destroy').addEventListener('click', function () {
+      destroyWidget();
+      setStatus('No widget yet');
+      log('Widget destroyed');
+    });
+
+    byId('clear-log').addEventListener('click', function () {
+      byId('log').textContent = '';
+    });
+
+    byId('useSignedLogin').addEventListener('change', renderSignedLoginStatus);
+
+    checkSignedLoginStatus();
+  </script>
+</body>
+
+</html>
