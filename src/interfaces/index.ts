@@ -24,6 +24,7 @@ export type InitialView = InitialViewUsingSearchQuery | InitialViewUsingFolderPa
 export interface ToolbarOptions {
   showCloseButton?: boolean;
   showInsertButton?: boolean;
+  showAccountSwitcher?: boolean;
 }
 
 export interface MLSettings {

@@ -1,3 +1,7 @@
+# 2.5.0
+
+- feat: Added `showAccountSwitcher` option in `mlSettings.toolbar` to control the Switch account option for users with access to multiple ImageKit accounts (shown by default, always hidden when `widgetImagekitId` is set)
+
 # 2.4.1
 
 - fix: Added loading overlay for inline view (previously only available in modal view)

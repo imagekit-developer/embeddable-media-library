@@ -102,7 +102,8 @@ var config = {
       // sets the visibility of the toolbar buttons
       // defaults to true for all buttons
       showCloseButton: false,
-      showInsertButton: false
+      showInsertButton: false,
+      showAccountSwitcher: false
     },
     queryParams: {
       // Add custom query parameters to the Media Library widget URL
@@ -128,6 +129,14 @@ var mediaLibraryWidget = new IKMediaLibraryWidget(config, callback);
 ```
 
 ![01-mlw.gif](assets/gifs/01-mlw.gif)
+
+### Switching between ImageKit accounts
+
+If a user's email belongs to more than one ImageKit account, the widget shows a **Switch account** option in the account menu of its toolbar, next to **Log out**. Like the other toolbar buttons it is shown by default. Hide it with `mlSettings.toolbar.showAccountSwitcher: false`.
+
+- The option only appears when the logged-in user has access to more than one account.
+- When `mlSettings.widgetImagekitId` is set, the widget stays on that account and the **Switch account** option is not shown.
+- After switching, the widget reloads in the selected account and opens the `initialView` passed in `mlSettings`, if any.
 
 **Note: Google Chrome (Incognito)**
 
