@@ -103,6 +103,7 @@ var config = {
       // defaults to true for all buttons except showAccountSwitcher
       showCloseButton: false,
       showInsertButton: false,
+      showLogoutButton: false,
       showAccountSwitcher: true
     },
     queryParams: {
