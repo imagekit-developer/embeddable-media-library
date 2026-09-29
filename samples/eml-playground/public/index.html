@@ -635,15 +635,17 @@
         byId('widget-root').style.height = '100%';
       }
 
+      var isCustomHost = host !== DEFAULT_HOST;
+
       widget = new IKMediaLibraryWidget({
         container: '#widget-root',
         className: 'media-library-widget',
         view: view,
         renderOpenButton: byId('renderOpenButton').checked,
-        mlSettings: mlSettings
+        mlSettings: isCustomHost ? {} : mlSettings
       }, onWidgetEvent);
 
-      if (host !== DEFAULT_HOST) {
+      if (isCustomHost) {
         widget.IK_HOST = host;
         widget.open({ mlSettings: mlSettings });
       }
