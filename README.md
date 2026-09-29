@@ -100,9 +100,11 @@ var config = {
     maxFiles: 20 // relevant when `multiple` is true
     toolbar: {
       // sets the visibility of the toolbar buttons
-      // defaults to true for all buttons
+      // defaults to true for all buttons except showAccountSwitcher
       showCloseButton: false,
-      showInsertButton: false
+      showInsertButton: false,
+      showLogoutButton: false,
+      showAccountSwitcher: true
     },
     queryParams: {
       // Add custom query parameters to the Media Library widget URL
@@ -129,6 +131,15 @@ var mediaLibraryWidget = new IKMediaLibraryWidget(config, callback);
 
 ![01-mlw.gif](assets/gifs/01-mlw.gif)
 
+### Switching between ImageKit accounts
+
+If a user's email belongs to more than one ImageKit account, the widget can show a **Switch account** option in the account menu of its toolbar, next to **Log out**. It is off by default. Turn it on with `mlSettings.toolbar.showAccountSwitcher: true`.
+
+- The option only appears when the logged-in user has access to more than one account.
+- When `mlSettings.widgetImagekitId` is set, the widget stays on that account and the **Switch account** option is not shown.
+- When the widget is opened with a signed login link, the **Switch account** option is not shown.
+- After switching, the widget reloads in the selected account and opens the `initialView` passed in `mlSettings`, if any.
+
 **Note: Google Chrome (Incognito)**
 
 To use this plugin on Google Chrome in Incognito mode, you need to enable third-party cookies:
@@ -147,4 +158,16 @@ npm run sample
 ```
 It will install dependencies and serve the included demo: `sample-app`.
 The sample app should be available on `http://localhost:3000`.
+
+### Playground
+
+For trying out options while developing, run:
+
+```bash
+npm run playground
+```
+
+It builds the widget and serves `samples/eml-playground` on `http://127.0.0.1:3005`: a settings form for the widget, `mlSettings` and toolbar options, and a log of the `INSERT` and `CLOSE` callbacks. The **EML host** field points the widget at a different host.
+
+To test logins with a signed link, copy `samples/eml-playground/sample.env` to `samples/eml-playground/.env`, fill in your account's public and private API keys, and restart the playground. The signature is created by the playground server, so the private key never reaches the browser. The signed login options only appear when both keys are set.
 
