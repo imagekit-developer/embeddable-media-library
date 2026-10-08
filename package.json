@@ -1,6 +1,6 @@
 {
   "name": "imagekit-media-library-widget",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "Javascript plugin for using Imagekit Media Library Widget",
   "main": "dist/imagekit-media-library-widget.cjs.js",
   "module": "dist/imagekit-media-library-widget.esm.js",
@@ -38,6 +38,7 @@
     "build": "rm -rf dist*;rollup -c --bundleConfigAsCjs",
     "test": "echo \"Error: no test specified\" && exit 1",
     "sample": "npm run build && cp dist/imagekit-media-library-widget.min.js samples/sample-app/public && cd samples/sample-app/ && npm i && npm start",
+    "playground": "npm run build && cp dist/imagekit-media-library-widget.min.js dist/imagekit-media-library-widget.min.js.map samples/eml-playground/public && cd samples/eml-playground/ && npm i && npm start",
     "saml-sample": "npm run build && cp dist/imagekit-media-library-widget.min.js samples/saml-auth/public && cd samples/saml-auth/ && npm i && npm run dev"
   },
   "repository": {

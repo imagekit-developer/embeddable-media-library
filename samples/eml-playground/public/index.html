@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>EML Playground</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --panel: #f6f7f9;
+      --surface: #ffffff;
+      --ink: #1b2433;
+      --muted: #687385;
+      --line: #e2e6ec;
+      --accent: #0450d5;
+      --accent-soft: #e8effc;
+      --danger: #b42318;
+      --danger-soft: #fef3f2;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      font-family: 'Poppins', system-ui, sans-serif;
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--ink);
+      background: #eef0f3;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      height: 100%;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: var(--panel);
+      border-right: 1px solid var(--line);
+    }
+
+    .sidebar-scroll {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 20px 20px 8px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .brand p {
+      margin: 2px 0 0;
+      color: var(--muted);
+    }
+
+    .group {
+      padding: 18px 0;
+    }
+
+    .group + .group {
+      border-top: 1px solid var(--line);
+    }
+
+    .group[hidden],
+    .switches[hidden] {
+      display: none;
+    }
+
+    .group h2 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .group h2 code {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    .field-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink);
+    }
+
+    .field-label.plain {
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      height: 34px;
+      padding: 0 10px;
+      font: inherit;
+      color: var(--ink);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="number"]::placeholder {
+      color: #a3abb8;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 3px;
+      background: #e7eaef;
+      border-radius: 8px;
+    }
+
+    .segmented input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .segmented label {
+      padding: 6px 0;
+      text-align: center;
+      font-weight: 500;
+      color: var(--muted);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .segmented input:checked + label {
+      color: var(--ink);
+      background: var(--surface);
+      box-shadow: 0 1px 2px rgba(27, 36, 51, 0.12);
+    }
+
+    .segmented input:focus-visible + label {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+
+    .switches {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .switches + .field {
+      margin-top: 10px;
+    }
+
+    .switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 7px 0;
+      cursor: pointer;
+    }
+
+    .switch-row span {
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .switch-row span.plain {
+      font-family: inherit;
+      font-size: 13px;
+    }
+
+    .switch-row input {
+      appearance: none;
+      flex: none;
+      position: relative;
+      width: 32px;
+      height: 18px;
+      margin: 0;
+      background: #cfd5de;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .switch-row input::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 14px;
+      height: 14px;
+      background: var(--surface);
+      border-radius: 50%;
+      box-shadow: 0 1px 2px rgba(27, 36, 51, 0.2);
+      transition: transform 0.15s ease;
+    }
+
+    .switch-row input:checked {
+      background: var(--accent);
+    }
+
+    .switch-row input:checked::after {
+      transform: translateX(14px);
+    }
+
+    .switch-row input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .switch-row input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .hint {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .hint.error {
+      padding: 8px 10px;
+      color: var(--danger);
+      background: var(--danger-soft);
+      border: 1px solid #fecdca;
+      border-radius: 6px;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 14px 20px 18px;
+      background: var(--panel);
+      border-top: 1px solid var(--line);
+    }
+
+    .actions-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    button {
+      height: 36px;
+      padding: 0 14px;
+      font: inherit;
+      font-weight: 500;
+      color: #fff;
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0344b5;
+    }
+
+    button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    button.secondary {
+      color: var(--ink);
+      background: var(--surface);
+      border-color: var(--line);
+    }
+
+    button.secondary:hover {
+      background: #eef1f5;
+    }
+
+    .status {
+      font-size: 12px;
+      color: var(--muted);
+      word-break: break-word;
+    }
+
+    .main {
+      display: grid;
+      grid-template-rows: 1fr 220px;
+      min-width: 0;
+      height: 100%;
+    }
+
+    #widget-root {
+      position: relative;
+      min-height: 0;
+      padding: 16px;
+    }
+
+    .log-panel {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      border-top: 1px solid var(--line);
+      background: #151b26;
+      color: #d9dee7;
+    }
+
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 12px;
+      background: #1d2533;
+    }
+
+    .log-header button {
+      height: 26px;
+      padding: 0 10px;
+    }
+
+    #log {
+      flex: 1;
+      margin: 0;
+      padding: 8px 12px;
+      overflow-y: auto;
+      font-family: var(--mono);
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 760px) {
+      .layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        height: auto;
+      }
+
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .main {
+        height: 100vh;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .switch-row input,
+      .switch-row input::after {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-scroll">
+        <div class="brand">
+          <h1>EML Playground</h1>
+          <p>Try the Media Library widget with any settings.</p>
+        </div>
+
+        <section class="group">
+          <h2>Widget</h2>
+          <label class="field">
+            <span class="field-label plain">EML host</span>
+            <input type="text" id="host" value="https://eml.imagekit.io">
+          </label>
+          <div class="field">
+            <span class="field-label plain">View</span>
+            <div class="segmented" role="radiogroup" aria-label="View">
+              <input type="radio" name="view" id="view-modal" value="modal" checked>
+              <label for="view-modal">Modal</label>
+              <input type="radio" name="view" id="view-inline" value="inline">
+              <label for="view-inline">Inline</label>
+            </div>
+          </div>
+          <div class="switches" id="renderOpenButtonOption">
+            <label class="switch-row">
+              <span>renderOpenButton</span>
+              <input type="checkbox" id="renderOpenButton" checked>
+            </label>
+          </div>
+        </section>
+
+        <section class="group">
+          <h2><code>mlSettings</code></h2>
+          <label class="field">
+            <span class="field-label">widgetImagekitId</span>
+            <input type="text" id="widgetImagekitId" placeholder="Leave empty to allow any account">
+          </label>
+          <label class="field">
+            <span class="field-label">maxFiles</span>
+            <input type="number" id="maxFiles" min="1" placeholder="No limit">
+          </label>
+          <div class="switches">
+            <label class="switch-row">
+              <span>multiple</span>
+              <input type="checkbox" id="multiple" checked>
+            </label>
+            <label class="switch-row">
+              <span>loginViaSSO</span>
+              <input type="checkbox" id="loginViaSSO">
+            </label>
+          </div>
+        </section>
+
+        <section class="group">
+          <h2><code>toolbar</code></h2>
+          <div class="switches">
+            <label class="switch-row">
+              <span>showInsertButton</span>
+              <input type="checkbox" id="showInsertButton" checked>
+            </label>
+            <label class="switch-row">
+              <span>showCloseButton</span>
+              <input type="checkbox" id="showCloseButton" checked>
+            </label>
+            <label class="switch-row">
+              <span>showLogoutButton</span>
+              <input type="checkbox" id="showLogoutButton" checked>
+            </label>
+            <label class="switch-row">
+              <span>showAccountSwitcher</span>
+              <input type="checkbox" id="showAccountSwitcher" checked>
+            </label>
+          </div>
+        </section>
+
+        <section class="group" id="signedLoginGroup" hidden>
+          <h2>Signed login</h2>
+          <div class="switches">
+            <label class="switch-row">
+              <span class="plain">Log in with a signed link</span>
+              <input type="checkbox" id="useSignedLogin">
+            </label>
+          </div>
+          <label class="field">
+            <span class="field-label plain">User email</span>
+            <input type="text" id="signedEmail" placeholder="you@company.com">
+          </label>
+          <label class="field">
+            <span class="field-label plain">Expires in (minutes)</span>
+            <input type="number" id="signedExpiry" min="1" max="720" value="60">
+          </label>
+          <div class="hint" id="signedStatus">Checking server keys...</div>
+        </section>
+      </div>
+
+      <div class="actions">
+        <button id="create">Create widget</button>
+        <div class="actions-row">
+          <button id="open" class="secondary">Open</button>
+          <button id="destroy" class="secondary">Destroy</button>
+        </div>
+        <div class="status" id="status">No widget yet</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div id="widget-root"></div>
+      <section class="log-panel">
+        <div class="log-header">
+          <strong>Event log</strong>
+          <button id="clear-log" class="secondary">Clear</button>
+        </div>
+        <pre id="log"></pre>
+      </section>
+    </main>
+  </div>
+
+  <script src="imagekit-media-library-widget.min.js"></script>
+  <script>
+    var DEFAULT_HOST = 'https://eml.imagekit.io';
+    var widget = null;
+
+    function byId(id) {
+      return document.getElementById(id);
+    }
+
+    function log(label, data) {
+      var line = '[' + new Date().toLocaleTimeString() + '] ' + label;
+      if (data !== undefined) {
+        line += '\n' + JSON.stringify(data, null, 2);
+      }
+      var logEl = byId('log');
+      logEl.textContent += line + '\n\n';
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function setStatus(text) {
+      byId('status').textContent = text;
+    }
+
+    function readMlSettings() {
+      var mlSettings = {
+        multiple: byId('multiple').checked,
+        toolbar: {
+          showInsertButton: byId('showInsertButton').checked,
+          showCloseButton: byId('showCloseButton').checked,
+          showLogoutButton: byId('showLogoutButton').checked,
+          showAccountSwitcher: byId('showAccountSwitcher').checked
+        }
+      };
+
+      var maxFiles = parseInt(byId('maxFiles').value, 10);
+      if (maxFiles > 0) {
+        mlSettings.maxFiles = maxFiles;
+      }
+
+      var widgetImagekitId = byId('widgetImagekitId').value.trim();
+      if (widgetImagekitId) {
+        mlSettings.widgetImagekitId = widgetImagekitId;
+      }
+
+      if (byId('loginViaSSO').checked) {
+        mlSettings.loginViaSSO = true;
+      }
+
+      return mlSettings;
+    }
+
+    function destroyWidget() {
+      if (widget) {
+        widget.destroy();
+        widget = null;
+      }
+      byId('widget-root').innerHTML = '';
+    }
+
+    function onWidgetEvent(payload) {
+      log('Callback: ' + (payload && payload.eventType), payload);
+    }
+
+    async function fetchSignedLoginParams() {
+      var params = new URLSearchParams({
+        email: byId('signedEmail').value.trim(),
+        expiresInMinutes: byId('signedExpiry').value
+      });
+      var response = await fetch('/signed-login?' + params.toString());
+      var body = await response.json();
+      if (!response.ok) {
+        throw new Error(body.error || 'Failed to create signed login link');
+      }
+      return body;
+    }
+
+    var signedLogin = { configured: false, error: 'Checking server keys...' };
+
+    function renderSignedLoginStatus() {
+      var statusEl = byId('signedStatus');
+      var showError = byId('useSignedLogin').checked && !signedLogin.configured;
+      statusEl.classList.toggle('error', showError);
+      statusEl.textContent = signedLogin.configured
+        ? 'Server has API keys. The signature is made on the server; the private key never reaches this page.'
+        : signedLogin.error;
+    }
+
+    async function checkSignedLoginStatus() {
+      try {
+        var response = await fetch('/signed-login/status');
+        var body = await response.json();
+        signedLogin = { configured: body.configured, error: body.error };
+      } catch (e) {
+        signedLogin = { configured: false, error: 'Could not reach the playground server.' };
+      }
+      byId('signedLoginGroup').hidden = !signedLogin.configured;
+      renderSignedLoginStatus();
+    }
+
+    async function createWidget() {
+      var mlSettings = readMlSettings();
+
+      if (byId('useSignedLogin').checked) {
+        if (!signedLogin.configured) {
+          renderSignedLoginStatus();
+          setStatus(signedLogin.error);
+          log('Signed login failed: ' + signedLogin.error);
+          return;
+        }
+        try {
+          var signedParams = await fetchSignedLoginParams();
+          mlSettings.queryParams = signedParams;
+          log('Signed login link created', {
+            userEmail: signedParams.userEmail,
+            expiresAt: new Date(Number(signedParams.expiresAtUnix) * 1000).toLocaleString()
+          });
+        } catch (e) {
+          setStatus(e.message);
+          log('Signed login failed: ' + e.message);
+          return;
+        }
+      }
+
+      destroyWidget();
+
+      var view = document.querySelector('input[name="view"]:checked').value;
+      var host = byId('host').value.trim().replace(/\/+$/, '') || DEFAULT_HOST;
+
+      if (view === 'inline') {
+        byId('widget-root').style.height = '100%';
+      }
+
+      var isCustomHost = host !== DEFAULT_HOST;
+
+      widget = new IKMediaLibraryWidget({
+        container: '#widget-root',
+        className: 'media-library-widget',
+        view: view,
+        renderOpenButton: byId('renderOpenButton').checked,
+        mlSettings: isCustomHost ? {} : mlSettings
+      }, onWidgetEvent);
+
+      if (isCustomHost) {
+        widget.IK_HOST = host;
+        widget.open({ mlSettings: mlSettings });
+      }
+
+      setStatus('Widget created (' + view + ') pointing at ' + host);
+      log('Widget created', { view: view, host: host, mlSettings: mlSettings });
+    }
+
+    byId('create').addEventListener('click', createWidget);
+
+    byId('open').addEventListener('click', function () {
+      if (!widget) {
+        setStatus('Create a widget first');
+        return;
+      }
+      widget.open();
+      log('open() called');
+    });
+
+    byId('destroy').addEventListener('click', function () {
+      destroyWidget();
+      setStatus('No widget yet');
+      log('Widget destroyed');
+    });
+
+    byId('clear-log').addEventListener('click', function () {
+      byId('log').textContent = '';
+    });
+
+    byId('useSignedLogin').addEventListener('change', renderSignedLoginStatus);
+
+    function syncViewOptions() {
+      var view = document.querySelector('input[name="view"]:checked').value;
+      byId('renderOpenButtonOption').hidden = view !== 'modal';
+    }
+
+    document.querySelectorAll('input[name="view"]').forEach(function (radio) {
+      radio.addEventListener('change', syncViewOptions);
+    });
+
+    syncViewOptions();
+
+    checkSignedLoginStatus();
+  </script>
+</body>
+
+</html>

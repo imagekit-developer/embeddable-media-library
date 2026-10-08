@@ -4,6 +4,7 @@ import {
     MediaLibraryWidgetOptionsExtended,
     InitialViewParameterEnum,
 } from './interfaces/index';
+import { version as WIDGET_VERSION } from '../package.json';
 
 export class ImagekitMediaLibraryWidget {
     private IK_HOST: string = 'https://eml.imagekit.io';
@@ -294,6 +295,7 @@ export class ImagekitMediaLibraryWidget {
                 if (this.iframe && this.iframe.contentWindow) {
                     this.iframe.contentWindow.postMessage(JSON.stringify({
                         mlSettings: this.options.mlSettings,
+                        version: WIDGET_VERSION,
                     }), this.IK_HOST);
                 }
                 this.setLoading(false);
